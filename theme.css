@@ -1,0 +1,425 @@
+body {
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  color: #322968;
+  background: white;
+}
+
+body, html {
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+#App {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  max-width: 100vw;
+  padding: 12px;
+}
+#App * {
+  scrollbar-width: none;
+}
+
+.area-main {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-right: 60px;
+}
+.area-main > .group {
+  border: none;
+  gap: 24px;
+}
+.area-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  max-height: 100vh;
+  max-width: 95vw;
+  width: 300px;
+  padding: 12px;
+  z-index: 100;
+}
+.area-menu:has(.menu-toggle:checked) {
+  background: black;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4196078431);
+}
+.area-menu:has(.menu-toggle:checked) .iMenu {
+  fill: white;
+}
+.area-menu .iMenu {
+  fill: black;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  left: 12px;
+  top: 12px;
+}
+
+.menu {
+  display: none;
+  background: black;
+}
+.menu-toggle {
+  width: 32px;
+  height: 32px;
+  background: black;
+  position: relative;
+  margin: 0;
+  display: block;
+  cursor: pointer;
+  opacity: 0;
+}
+.menu-toggle:checked + .menu {
+  display: block;
+}
+.menu-list {
+  padding: 0;
+}
+.menu-item {
+  padding: 0;
+  list-style: none;
+}
+.menu-link {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 12px;
+  color: #cccccc;
+}
+.menu-link.depth-0 {
+  color: #6e99d8;
+}
+.menu-link:hover {
+  padding-left: 12px;
+  color: #9c8df0;
+}
+.menu-link .day-nr {
+  display: none;
+}
+
+.day-nr {
+  text-transform: uppercase;
+  padding: 4px 12px;
+  background: #e0f4f4;
+  color: #479696;
+  margin-right: 12px;
+}
+
+.group {
+  padding: 16px;
+  background: rgba(233, 233, 233, 0.2784313725);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.95em;
+}
+.group-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.group-title .date {
+  font-weight: normal;
+  margin-left: auto;
+  display: inline-block;
+  font-size: 0.9em;
+}
+.group-content:last-child {
+  margin-bottom: 0;
+}
+.group .group {
+  --accentColorBg: #322968;
+  --accentColor: white;
+  position: relative;
+  gap: 0;
+  border-left: 5px solid var(--accentColorBg);
+  padding-top: 24px;
+}
+.group .group > .group-item:nth-child(even) {
+  background: rgba(225, 225, 225, 0.4392156863);
+}
+.group .group.gDefault {
+  padding-bottom: 0;
+}
+.group .group.gDefault .gDefault::before {
+  content: "SUB-PLAN";
+}
+.group .group.gSections {
+  border: none;
+  padding: 0;
+  gap: 12px;
+}
+.group .group.gSections::before {
+  display: none;
+}
+.group .group.gSections > .group-item {
+  padding: 0;
+}
+.group .group.gSections > .group-item:has(> .group-icon) {
+  padding-left: 52px;
+}
+.group .group.gSections > .group-item:nth-child(even) {
+  background: none;
+}
+.group .group.gTicketOptions {
+  --accentColorBg: #ffe29e;
+  --accentColor: #b69375;
+  flex-direction: row;
+  border: 5px solid var(--accentColorBg);
+}
+.group .group.gTicketOptions::before {
+  content: "TICKET OPTIONS";
+  top: -5px;
+  left: -5px;
+}
+.group .group.gTicketOptions > div {
+  flex: 1 1;
+}
+.group .group.gTimes {
+  --accentColorBg: #9eb8ff;
+  --accentColor: #4d6486;
+  flex-direction: row;
+  border: 5px solid var(--accentColorBg);
+}
+.group .group.gTimes::before {
+  content: "TIMES";
+  top: -5px;
+  left: -5px;
+}
+.group .group.gTimes > div {
+  flex: 1 1;
+}
+.group .group::before {
+  content: "PLAN";
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 4px 10px;
+  font-size: 0.7em;
+  font-weight: bold;
+  background: var(--accentColorBg);
+  color: var(--accentColor);
+  letter-spacing: 1px;
+}
+.group .group .group-content {
+  margin-top: -0.65em;
+}
+.group-item {
+  position: relative;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.group-item:has(> .group-icon) {
+  padding-left: 52px;
+}
+.group-time {
+  position: absolute;
+  right: 16px;
+  font-size: 0.9em;
+  top: 11px;
+  background: #eaefff;
+  padding: 4px 10px;
+  font-weight: bold;
+  color: #4f7cff;
+}
+.group-icon {
+  position: absolute;
+  left: 10px;
+  background: #e7e4f2;
+  aspect-ratio: 1/1;
+  display: block;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  top: 10px;
+}
+.group-icon svg {
+  fill: #4b417b;
+}
+.group-icon svg.iOrange {
+  fill: #ff5b4c;
+}
+.group-icon:has(> .iOrange) {
+  background: #ffe9e6;
+}
+.group-price::before, .group-priceTransportation::before {
+  display: inline-block;
+  content: "Price: ";
+  margin-right: 5px;
+  font-weight: bold;
+}
+.group-priceTransportation::before {
+  content: "Price (Transportation): ";
+}
+.group-links::before {
+  display: block;
+  content: "Resources:";
+  font-weight: bold;
+}
+.group-links a {
+  display: flex;
+  align-items: center;
+  color: #322968;
+}
+.group-links a svg {
+  display: inline-block;
+  margin-right: 5px;
+  aspect-ratio: 1/1;
+  width: 16px;
+  fill: #322968;
+}
+.group-transportationTime {
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 0;
+  transform: translateY(-50%);
+  padding: 3px 10px;
+  background: #f9e2ed;
+  font-size: 0.8em;
+  font-weight: bold;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  color: #ce528d;
+}
+.group-transportationTime span {
+  white-space: nowrap;
+}
+.group-transportationTime svg {
+  fill: #ce528d;
+  aspect-ratio: 1/1;
+  height: 16px;
+  width: auto;
+}
+.group-transportationTime::before {
+  content: "";
+  background-image: url("./img/icons/time-drive.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  aspect-ratio: 1/1;
+  width: 16px;
+  background-position: center center;
+}
+.group-transportationTime::after {
+  content: "";
+  height: 80px;
+  position: absolute;
+  border-left: 5px dotted #f9c1dc;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.group-transportationTime:has(svg)::before {
+  display: none;
+}
+.group-transportationTime:has(> .tClock)::before {
+  background-image: url("./img/icons/time-clock.svg");
+}
+.group-location a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #322968;
+}
+.group-location svg {
+  height: 16px;
+  width: auto;
+  fill: #322968;
+}
+.group-mapLoc {
+  display: none;
+}
+.group-map {
+  display: none;
+}
+
+.gal {
+  overflow-x: auto;
+}
+.gal-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 4px;
+}
+.gal-img {
+  aspect-ratio: 1/1;
+  height: 100%;
+  min-width: 320px;
+  max-height: 320px;
+}
+.gal-img img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wechat {
+  padding: 8px;
+  border: 4px solid #d2dada;
+  text-align: left;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #eef0f1;
+  padding-top: 30px;
+}
+.wechat::before {
+  content: "WECHAT";
+  display: block;
+  font-weight: bold;
+  color: #479696;
+  font-size: 0.75em;
+  background: #d2dada;
+  padding: 4px 10px;
+  position: absolute;
+  left: -4px;
+  top: -4px;
+}
+.wechat:hover .wechat-img {
+  display: block;
+}
+.wechat-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.wechat-label svg {
+  fill: #322968;
+}
+.wechat-img {
+  display: none;
+  max-width: 150px;
+  filter: grayscale(1) contrast(1.5);
+  mix-blend-mode: darken;
+}
+
+.todo {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  font-size: 10px;
+  z-index: 100;
+  color: red;
+  opacity: 0.5;
+}
+
+/*# sourceMappingURL=theme.css.map */
