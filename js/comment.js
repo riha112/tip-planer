@@ -74,19 +74,13 @@
             ).then(r => r.json());
 
             if (!data) return {};
-            console.debug([data]);
             const rawData = data.record.data;
             if (!rawData) return {};
-            console.debug([rawData]);
             try {
                 let jsonData = JSON.parse(JSON.parse(rawData));
-                console.debug([jsonData]);
-
                 jsonData = await window.crypt.decrypt(jsonData, false, '', false);
-
                 if (!jsonData) return {};
                 this.cache = JSON.parse(jsonData);
-                console.debug([this.cache, jsonData]);
             } catch (e){
                 console.debug(e);
                 return {};
@@ -143,6 +137,22 @@
         }
     };
 
+    const ALLOWED_ATTRIBUTES = ['id', 'class', 'href', 'target', 'src', 'alt', 'style'];
+    safeDOM = function(parent) {
+        let nonAllowed = parent.querySelectorAll('script, style, link, input, button, form');
+        nonAllowed.forEach((d) => d.remove());
+
+        const nodes = parent.querySelectorAll('*');
+        nodes.forEach((node) => {
+            [...node.attributes].forEach(attr => {
+                if (!ALLOWED_ATTRIBUTES.includes(attr.name)) {
+                    console.debug(['removing', attr.name]);
+                    node.removeAttribute(attr.name);
+                }
+            });
+        });
+    };
+
     const commentManager = {
         comments: {},
         getComments: async function() {
@@ -171,7 +181,7 @@
                 if (!items || !items.length) return;
 
                 el.classList.add('comment-holder-dom');
-                let domWrapper = rd('comments-msgs', el);
+                let domWrapper = rd('comments-msgs');
 
                 let domToggle = rd('comments-toggle', domWrapper);
                 domToggle.addEventListener('click', () => {
@@ -186,6 +196,7 @@
                 items.forEach((c) => {
                     let commentDom = rd('comment-msg', domWrapperList);
                     let commentMsgDom = rd('comment-msg-content', commentDom, c.msg);
+                    safeDOM(commentMsgDom);
                     commentMsgDom.classList.add(c.type);
 
                     let deleteMsgDom = rd('comment-msg-delete', commentDom, ICONS.trash);
@@ -195,6 +206,8 @@
                         commentManager.renderComments();
                     });
                 });
+                
+                el.appendChild(domWrapper);
             });
         }
     };
@@ -207,7 +220,6 @@
             onShow: function(uid) {
                 this.uid = uid;
                 this.isHidden = false;
-                console.debug([uid]);
             },
             onSubmit: async function() {
                 if (!this.uid) return this.onClose();
