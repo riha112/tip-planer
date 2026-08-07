@@ -137,5 +137,5 @@
         }
     };
 
-    app.run(true);
+    app.run(false || location.href.includes('riha112.github'));
 })('App');

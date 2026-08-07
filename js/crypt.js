@@ -75,16 +75,35 @@
         return decoder.decode(decrypted);
     }
 
+    const KEY_ID = 'crptKy';
+
     window.crypt = {
         encrypt: async function(data, key) {
             return await encrypt(data, key);
         },
         decrypt: async function(data, prompt = true, key = '') {
-            if (prompt) {
+            let storedKey = localStorage.getItem(KEY_ID);
+
+            if (!storedKey && prompt) {
                 key = window.prompt('Enter password', key);
+            } else {
+                key = storedKey;
             }
 
-            return await decrypt(data, key);
+            localStorage.setItem(KEY_ID, key);
+            let o = '';
+
+            try {
+                o = await decrypt(data, key);
+            } catch {
+                localStorage.removeItem(KEY_ID);
+            }
+
+            if (!o) {
+                localStorage.removeItem(KEY_ID);
+            }
+
+            return o;
         }
     };
 })();

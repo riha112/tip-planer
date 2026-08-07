@@ -52,11 +52,13 @@ img {
         z-index: 100;
 
         &:has(.menu-toggle:checked) {
-            background: black;
+            backdrop-filter: blur(5px);
+            background: #000000eb;
             box-shadow: 0 0 30px #0000006b;
 
             .iMenu {
                 fill: white;
+                background-color: transparent;
             }
         }
 
@@ -67,13 +69,13 @@ img {
             position: absolute;
             left: 12px;
             top: 12px;
+            background-color: white;
         }
     }
 }
 
 .menu {
     display: none;
-    background: black;
 
     &-toggle {
         width: 32px;
@@ -505,7 +507,7 @@ img {
     position: fixed;
     right: 10px;
     bottom: 10px;
-    font-size: 10px;
+    font-size: 8px;
     z-index: 100;
     color: red;
     opacity: 0.5;
@@ -546,11 +548,17 @@ img {
             width: 100%;
             max-width: 100%;
             padding: 12px;
-            background: white;
+            background: #ffffffc9;
             box-shadow: 0 0 25px #d5d5d5;
+            backdrop-filter: blur(5px);
 
             &:has(.menu-toggle:checked) {
                 height: 100vh;
+                background: #000000eb;
+            }
+
+            .iMenu {
+                background-color: transparent;
             }
         }
     }
@@ -577,10 +585,6 @@ img {
             &.gTicketOptions,
             &.gTimes {
                 flex-direction: column;
-
-                >div {
-                    width: 100%;
-                }
             }
         }
 
@@ -588,8 +592,7 @@ img {
             padding: 8px;
 
             &:has(>.group-icon) {
-                padding-left: 8px;
-                // padding-left: 40px;
+                padding-left: 8px !important;
             }
 
             &:has(>.group-time) {
@@ -601,12 +604,12 @@ img {
 
         &-time {
             display: inline-block;
-            margin-top: 6px;
-            margin-bottom: 6px;
             width: fit-content;
             position: absolute;
             right: 0;
-            top: 10px;
+            top: 9px;
+            margin: 0;
+            z-index: 4;
         }
 
         &-icon {
@@ -623,6 +626,8 @@ img {
             margin: 0;
             right: 0;
             left: auto;
+            top: -2px;
+            z-index: 10;
             
             &::after {
                 display: none;
