@@ -78,11 +78,17 @@
     const KEY_ID = 'crptKy';
 
     window.crypt = {
-        encrypt: async function(data, key) {
+        getKey: function() {
+            return localStorage.getItem(KEY_ID);
+        },
+        encrypt: async function(data, key = false) {
+            if (!key) {
+                key = this.getKey();
+            }
             return await encrypt(data, key);
         },
-        decrypt: async function(data, prompt = true, key = '') {
-            let storedKey = localStorage.getItem(KEY_ID);
+        decrypt: async function(data, prompt = true, key = '', del = true) {
+            let storedKey = this.getKey();
 
             if (!storedKey && prompt) {
                 key = window.prompt('Enter password', key);
@@ -95,11 +101,14 @@
 
             try {
                 o = await decrypt(data, key);
-            } catch {
-                localStorage.removeItem(KEY_ID);
+            } catch (e) {
+                console.debug([e]);
+                if (del) {
+                    localStorage.removeItem(KEY_ID);
+                }
             }
 
-            if (!o) {
+            if (!o && del) {
                 localStorage.removeItem(KEY_ID);
             }
 

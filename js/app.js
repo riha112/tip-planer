@@ -90,8 +90,14 @@
             }
 
             const idAtt = id ? 'id="' + id + '"' : '';
+            let hashAtt = '';
 
-            return '<div ' + idAtt + ' class="group-' + key + '">' + data + '</div>'
+            if (!['icon'].includes(key)) {
+                const hash = window.hash(data);
+                hashAtt = '  data-hash="' + hash + '"';
+            }
+
+            return '<div ' + idAtt + hashAtt + '" class="group-' + key + '">' + data + '</div>'
         },
         renderParse: function (outputParse) {
             let output = '';

@@ -16,6 +16,18 @@ img {
     max-width: 100%;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+[x-cloak] {
+    display: none;
+}
+
+.comment-holder-dom {
+    position: relative;
+}
+
 #App {
     display: flex;
     flex-direction: row;
@@ -33,6 +45,7 @@ img {
         max-width: 1200px;
         margin-inline: auto;
         padding-right: 60px;
+        width: 100%;
 
         & > .group {
             border: none;
@@ -675,6 +688,300 @@ img {
     }
 
     .todo {
+        display: none;
+    }
+}
+
+.comment {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0000006b;
+    z-index: 99999;
+    backdrop-filter: blur(2px);
+    opacity: 100%;
+    transition: opacity 0.2s ease;
+
+    &.isHidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &-form {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        overflow: hidden;
+
+        width: min(400px, calc(100vw - 2rem));
+        border-radius: 12px;
+        padding: 28px;
+        padding-top: 65px;
+
+        background: #fff;
+        box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.12),
+            0 2px 8px rgba(0, 0, 0, 0.06);
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        z-index: 1000;
+
+        button, textarea {
+            appearance: none;
+            outline: none;
+            box-shadow: none;
+            border: none;
+        }
+
+        button {
+            background: black;
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            flex: 1 1;
+
+            &.button-sec {
+                background: #4f7cff;
+            }
+        }
+    }
+
+    &-header {
+        background: black;
+        color: white;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+
+        span {
+            flex: 1;
+        }
+
+        svg {
+            cursor: pointer;
+            fill: white;
+        }
+    }
+
+    &-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+    }
+
+    &-input-wrapper {
+        position: relative;
+    }
+
+    &-loader {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: #0000008a;
+        z-index: 99999;
+        backdrop-filter: blur(2px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            fill: white;
+            width: 48px;
+            height: 48px;
+            animation: rotate 2s linear infinite;
+        }
+    }
+}
+
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.comments {
+    &-msgs {
+        position: absolute;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        z-index: 999;
+        right: calc(100% + 8px);
+        top: 0;
+
+        &:has(.local) {
+            .comments-count {
+                background: #30c4f1;
+            }
+        }
+
+        &:has(.public) {
+            .comments-count {
+                background: #f1306f;
+            }
+        }
+
+        &:has(.local):has(.public) {
+            .comments-count {
+                background: #f1a430;
+            }
+        }
+
+        &-list {
+            flex-direction: column;
+            gap: 8px;
+            display: none;
+            background: white;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            padding: 12px;
+            box-shadow: 0 0 30px #0000004b;
+        }
+
+        &.isVisible {
+            z-index: 1000;
+
+            .comments {
+                &-msgs-list {
+                    display: flex;
+                    max-width: 50vw;
+                    width: 250px;
+                }
+
+                &-toggle {
+                    z-index: 999;
+                    position: relative;
+                    background-color: white;
+                }
+            }
+        }
+    }
+
+    &-count {
+        border-radius: 20px;
+        background: #f1306f;
+        color: white;
+        text-align: center;
+        font-size: 10px;
+        font-weight: bold;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translate(50%, -50%);
+        padding: 0 5px;
+    }
+
+    &-toggle {
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        background-image: url('./img/icons/chat.svg');
+        background-position: center center;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+}
+
+.comment-msg {
+    font-weight: normal;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+
+    & + & {
+        border-top: 1px solid black;
+        padding-top: 4px;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    &-content {
+        padding-top: 2px;
+        flex: 1;
+    }
+
+    &-delete {
+        box-sizing: border-box;
+        aspect-ratio: 1/1;
+        max-height: 20px;
+        min-width: 20px;
+        background: red;
+        cursor: pointer;
+        padding: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+            fill: white;
+        }
+    }
+}
+
+.comment-mode {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    &-text {
+        font-size: 12px;
+        color: red;
+        max-width: 200px;
+        text-align: right;
+        line-height: 1;
+    }
+
+    &-button {
+        background: white;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        display: flex;
+        padding: 4px;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 10px #0000004b;
+        box-sizing: border-box;
+    }
+
+    &-status {
+        font-weight: bold;
+    }
+}
+
+body:not(.comment-mode-active) {
+    .comment-form {
+        display: none;
+    }
+
+    .comments-msgs {
         display: none;
     }
 }
