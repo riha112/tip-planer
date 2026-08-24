@@ -1,7 +1,14 @@
-(function(appId) {
+(function(appId, plansHldId, plansSelectorHldId) {
+    const URL_PLAN_KEY = 'pID';
     const appDOM = document.getElementById(appId);
+    const plansDOM = document.getElementById(plansHldId);
+    const plansSelDOM = document.getElementById(plansSelectorHldId);
+
+    let isPlanSelectorView = false;
     let titleCounter = 0;
     const titlePrefix = 'aTtl';
+
+    let sections = [];
 
     const app = {
         menu: [],
@@ -129,6 +136,78 @@
 
             return '<div class="group g' + gType + '">' + rendered + "</div>";
         },
+        switchView: function(isPlanSelectorView) {
+            plansDOM.classList.toggle('isVisible', !isPlanSelectorView);
+            plansSelDOM.classList.toggle('isVisible', isPlanSelectorView);
+
+            if (!isPlanSelectorView) {
+                this.updateUrlParm('');
+            }
+        },
+        readUrl: function() {
+            const params = new URLSearchParams(window.location.search);
+            const value = params.get(URL_PLAN_KEY);
+
+            if (!value) {
+                this.switchView(true);
+            } else {
+                this.switchPlan(value);
+            }
+        },
+        updateUrlParm: function(key) {
+            const url = new URL(window.location.href);
+            url.searchParams.set(URL_PLAN_KEY, key);
+            window.history.pushState({}, "", url);
+        },
+        switchPlan: function(key) {
+            sections.forEach((sec) => sec.classList.remove('isVisible'));
+            document.getElementById('plan-' + key).classList.add('isVisible');
+            this.switchView(false);
+            this.updateUrlParm(key);
+        },
+        renderPlansSelector: function (key, item) {
+            const { title, icon, bg, dates, words } = item;
+            const sDom = document.createElement('div');
+            sDom.classList.add('plan-selector');
+            sDom.addEventListener('click', () => {
+                this.switchPlan(key);
+            });
+
+            sDom.innerHTML = `
+                <div class="plan-selector-bg">
+                    <img class="plan-selector-bg-img" src="./img/${bg}">
+                </div>
+                <div class="plan-selector-content">
+                    <img class="plan-selector-icon" src="./img/${icon}">
+                    <div class="plan-selector-title">${title}</div>
+                    <div class="plan-selector-dates">${dates}</div>
+                </div>
+            `;
+
+            if (window.wordEffect) {
+                window.wordEffect.init(sDom, words);
+            }
+
+            return sDom;
+        },
+        renderPlans: function (items) {
+            Object.keys(items).forEach((id) => {
+                const item = items[id];
+                const { header, plan } = item;
+
+                const iWrapper = document.createElement('div');
+                iWrapper.id = 'plan-' + id;
+                iWrapper.classList.add('plan-item');
+                sections.push(iWrapper);
+
+                const groupHtml = '<div class="area-main"><H1>' + header + '</H1>' + this.renderGroup(plan) + '</div>';
+                const menuHtml = '<div class="area-menu">' + ICONS.menu + '<input class="menu-toggle" type="checkbox"/>' +  this.renderMenu() + '</div>';
+                iWrapper.innerHTML = menuHtml + groupHtml;
+
+                plansDOM.appendChild(iWrapper);
+                plansSelDOM.appendChild(this.renderPlansSelector(id, item));
+            });
+        },
         run: async function (decrypt = false) {
             let jsonData = '';
             if (!decrypt) jsonData = PLAN;
@@ -137,11 +216,14 @@
                 jsonData = JSON.parse(jsonData);
             }
 
-            const groupHtml = '<div class="area-main"><H1>Beijing Trip Plan</H1>' + this.renderGroup(jsonData) + '</div>';
-            const menuHtml = '<div class="area-menu">' + ICONS.menu + '<input class="menu-toggle" type="checkbox"/>' +  this.renderMenu() + '</div>';
-            appDOM.innerHTML = menuHtml + groupHtml;
+            this.renderPlans(jsonData);
+            this.readUrl();
+
+            window.addEventListener("popstate", () => {
+                this.readUrl();
+            });
         }
     };
 
     app.run(false || location.href.includes('riha112.github'));
-})('App');
+})('App', 'Plans', 'PlanSelector');
