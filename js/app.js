@@ -259,6 +259,7 @@
             else {
                 jsonData = await window.crypt.decrypt(PLAN_EN)
                 jsonData = JSON.parse(jsonData);
+                window.PLAN = jsonData;
             }
 
             this.renderPlans(jsonData);
