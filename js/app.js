@@ -235,6 +235,7 @@
         },
         renderPlans: function (items) {
             Object.keys(items).forEach((id) => {
+                this.menu = [];
                 const item = items[id];
                 const { header, plan } = item;
 
