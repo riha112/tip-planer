@@ -1091,6 +1091,8 @@ body:not(.comment-mode-active) {
             border-radius: 0 0 20px 0;
             overflow: hidden;
             font-size: 0.9em;
+            display: flex;
+            flex-direction: column;
 
             .menu-link {
                 padding: 0.8em;
@@ -1099,8 +1101,6 @@ body:not(.comment-mode-active) {
 
         &.isOpen {
             & > .menu-children {
-                display: flex;
-                flex-direction: column;
                 max-height: 450px;
             }
 
@@ -1127,6 +1127,24 @@ body:not(.comment-mode-active) {
         &.hasChildren {
             & > .menu-item-title > .menu-chevron {
                 display: flex;
+            }
+        }
+
+        &.searchable-hidden {
+            display: none;
+        }
+
+        &:has(.searchable-visible) {
+            display: block;
+
+            & > .menu-children {
+                max-height: 450px;
+            }
+
+            & > .menu-item-title > .menu-chevron {
+                svg {
+                    transform: rotate(0);
+                }
             }
         }
     }
@@ -1199,17 +1217,6 @@ body:not(.comment-mode-active) {
             .iMenu {
                 background-color: transparent;
             }
-        }
-    }
-
-    .menu {
-        width: 100%;
-        margin-top: 20px;
-
-        &-link {
-            display: block;
-            padding: 10px 0;
-            font-size: 14px;
         }
     }
 

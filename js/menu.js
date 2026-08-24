@@ -105,3 +105,30 @@
 
     PIPE.invoke(EVENTS.onMenuLoaded);
 })();
+
+(function() {
+    const searchBar = document.getElementById('newMenuSearch');
+    const searchables = [...document.getElementsByClassName('menu-item')];
+    
+    const searchFn = function() { 
+        const searchable = searchBar.value;
+        searchables.forEach((el) => {
+            const parent = el;// el.parentElement;
+
+            if (searchable) {
+                if (el.innerText.toLowerCase().indexOf(searchable.toLowerCase()) >= 0) {
+                    parent.classList.add('searchable-visible');
+                    parent.classList.remove('searchable-hidden');
+                } else {
+                    parent.classList.add('searchable-hidden');
+                    parent.classList.remove('searchable-visible');
+                }
+            } else {
+                parent.classList.remove('searchable-hidden');
+                parent.classList.remove('searchable-visible');
+            }
+        })
+    };
+
+    searchBar.addEventListener('input', searchFn);
+})();

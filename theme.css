@@ -915,13 +915,13 @@ body:not(.comment-mode-active) .comments-msgs {
   border-radius: 0 0 20px 0;
   overflow: hidden;
   font-size: 0.9em;
+  display: flex;
+  flex-direction: column;
 }
 .menu-item .menu-children .menu-link {
   padding: 0.8em;
 }
 .menu-item.isOpen > .menu-children {
-  display: flex;
-  flex-direction: column;
   max-height: 450px;
 }
 .menu-item.isOpen > .menu-item-title > .menu-chevron svg {
@@ -938,6 +938,18 @@ body:not(.comment-mode-active) .comments-msgs {
 }
 .menu-item.hasChildren > .menu-item-title > .menu-chevron {
   display: flex;
+}
+.menu-item.searchable-hidden {
+  display: none;
+}
+.menu-item:has(.searchable-visible) {
+  display: block;
+}
+.menu-item:has(.searchable-visible) > .menu-children {
+  max-height: 450px;
+}
+.menu-item:has(.searchable-visible) > .menu-item-title > .menu-chevron svg {
+  transform: rotate(0);
 }
 
 .comment-mode-active .comment-mode-notice {
@@ -997,15 +1009,6 @@ body:not(.comment-mode-active) .comments-msgs {
   }
   .area-menu .iMenu {
     background-color: transparent;
-  }
-  .menu {
-    width: 100%;
-    margin-top: 20px;
-  }
-  .menu-link {
-    display: block;
-    padding: 10px 0;
-    font-size: 14px;
   }
   .group {
     padding: 8px;
