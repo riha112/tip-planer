@@ -108,10 +108,14 @@
 
 (function() {
     const searchBar = document.getElementById('newMenuSearch');
-    const searchables = [...document.getElementsByClassName('menu-item')];
+    let searchables = [];
     
     const searchFn = function() { 
         const searchable = searchBar.value;
+        if (!searchables || !searchables.length) {
+           searchables = [...document.querySelectorAll('.menu-item')];
+        }
+
         searchables.forEach((el) => {
             const parent = el;// el.parentElement;
 
