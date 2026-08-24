@@ -64,7 +64,6 @@
     const publicComments = {
         cache: false,
         load: async function() {
-            return {};
             if(!window.crypt.getKey()) return {};
             if (this.cache) return this.cache;
             const data  = await fetch(
