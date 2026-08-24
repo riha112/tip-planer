@@ -7,7 +7,7 @@
         bubble.textContent = word;
 
         const angle = Math.random() * Math.PI * 2;
-        const distance = 50 + Math.random() * 250;
+        const distance = Math.random() * 200;
 
         const x =
             area.offsetWidth / 2 +

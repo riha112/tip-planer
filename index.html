@@ -63,27 +63,44 @@
     </div>
 
 
-    <div class="comment-mode" x-data="{ 
-        isActive: false,
-        toggle: function() { 
-            this.isActive = !this.isActive;
-            window.commentMode = this.isActive;
-            document.body.classList.toggle('comment-mode-active', this.isActive);
-        }
-    }">
-        <div class="comment-mode-text">
-            Comment mode: 
-            <span class="comment-mode-status" x-text="isActive ? 'On' : 'Off'">Off</span>
-            <span x-show="isActive">, use right click to leave comment</span>
+
+    <div class="newMenu">
+        <div class="comment-mode-notice">
+            Use right click to leave comment.
         </div>
-        <div class="comment-mode-button" @click="toggle()" x-html="isActive ? ICONS.visible : ICONS.notVisible">
-            
+        <div id="homeMenu" class="newMenu-item newMenu-home" data-fn="onHome">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+            <div class="newMenu-itemText">Home</div>
+        </div>
+        <div id="planMenu" class="newMenu-item newMenu-plan isActive" data-fn="onPlan">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm80-80h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm221.5-198.5Q510-807 510-820t-8.5-21.5Q493-850 480-850t-21.5 8.5Q450-833 450-820t8.5 21.5Q467-790 480-790t21.5-8.5ZM200-200v-560 560Z"/></svg>
+            <div class="newMenu-itemText">Seoul</div>
+        </div>
+        <div id="menuMenu" class="newMenu-item newMenu-menu" data-toggle="true" data-fn="onMenu">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+            <div class="newMenu-itemText">Menu</div>
+        </div>
+        <div class="newMenu-item newMenu-comment" data-toggle="true" data-fn="onComments">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
+            <div class="newMenu-itemText">Com/On</div>
+        </div>
+    </div>
+
+    <div id="newMenuMenu" class="newMenu-menuWrapper">
+        <div class="newMenu-menuWrapperInner">
+            <div class="newMenu-menuSearch">
+                <input class="newMenu-search" type="text" placeholder="Search..."/>
+            </div>
+            <div id="menuItems" class="newMenu-menuItems">
+
+            </div>
         </div>
     </div>
 
     <!-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> -->
     <script src="./js/crypt.js"></script>
     <script src="./js/hash.js"></script>
+    <script src="./js/pipe.js"></script>
     <script src="./js/wordEffect.js"></script>
     
     <script src="./js/data.js"></script>
@@ -93,6 +110,7 @@
     <script src="./js/app.js"></script>
 
     <script src="./js/comment.js"></script>
+    <script src="./js/menu.js"></script>
     <!-- <script src="./map.js"></script> -->
 </body>
 </html>

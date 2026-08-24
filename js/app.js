@@ -3,7 +3,8 @@
     const appDOM = document.getElementById(appId);
     const plansDOM = document.getElementById(plansHldId);
     const plansSelDOM = document.getElementById(plansSelectorHldId);
-
+    const menuItemsDOM = document.getElementById('menuItems');
+    
     let isPlanSelectorView = false;
     let titleCounter = 0;
     const titlePrefix = 'aTtl';
@@ -14,16 +15,51 @@
         menu: [],
         renderMenu: function() {
             if (!this.menu) return '';
-            let output = '';
+            let menuDom = document.createElement('div');
+            menuDom.className = 'menu';
+            let menuUlDom = document.createElement('div');
+            menuUlDom.className = 'menu-list';
+            menuDom.appendChild(menuUlDom);
+            
+            letParentMap = {
+            };
+
+            let depth = 0;
 
             this.menu.forEach((item) => {
-                const cls = 'depth-' + item.depth;
-                output += '<li class="menu-item"><a class="menu-link ' + cls + '" href="#' + item.id + '">'
-                    + item.label
-                    + '</a></li>';
+                depth = item.depth;
+                
+                const iDom = document.createElement('div');
+                iDom.className = 'menu-item depth-' + depth;
+                iDom.innerHTML = `
+                    <div class="menu-item-title">
+                        <div class="menu-link" data-href="#${item.id}">
+                            ${item.label}
+                        </div>
+                        <div class="menu-chevron">${ICONS.chevronUp}</div>
+                    </div>
+                    <div class="menu-children"></div>
+                `;
+          
+                if (depth === 0) {
+                    menuUlDom.appendChild(iDom);
+                } else {
+                    const p = letParentMap[depth - 1];
+                    p.querySelector('.menu-children').appendChild(iDom);
+                    if (!p.classList.contains('hasChildren')) {
+                        p.querySelector('.menu-chevron').addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            p.classList.toggle('isOpen');
+                        });
+                        p.classList.add('hasChildren');
+                    }
+                }
+
+                letParentMap[depth] = iDom;
             });
 
-            return '<div class="menu"><ul class="menu-list">' + output + '</ul></div>'
+            return menuDom;
         },
         renderImg: function(data) {
             let style = data.style ? data.style : '';
@@ -52,7 +88,7 @@
 
             return '<div class="gal"><div class="gal-wrapper">' + output + '</div></div>';
         },
-        renderByKey: function (key, data, depth = '') {
+        renderByKey: function (key, data, depth = 0) {
             if (!data || ['type'].includes(key)) return '';
             let id = '';
 
@@ -89,10 +125,11 @@
                 data = '<span data-map-location data-x="'+data.x+'" data-y="'+data.y+'"></span>';
             } else if (key === 'title') {
                 id = titlePrefix + (titleCounter++);
+                // console.debug([depth, data]);
                 this.menu.push({
                     id,
-                    label: depth + ' ' + data,
-                    depth: depth.length
+                    label: data,
+                    depth: depth
                 });
             }
 
@@ -120,14 +157,18 @@
 
             return output;
         },
-        renderGroup: function (items, gType = 'Default', depth = '') {
+        renderGroup: function (items, gType = 'Default', depth = 0) {
             let rendered = '';
 
             items.forEach((item) => {
                 let outputParse = {};
 
                 Object.keys(item).forEach((key) => {
-                    if (key === 'items') outputParse[key] = this.renderGroup(item.items, (item.groupType ? item.groupType : 'Default'), depth + '-');
+                    if (key === 'items') outputParse[key] = this.renderGroup(
+                        item.items,
+                        (item.groupType ? item.groupType : 'Default'),
+                        depth + 1
+                    );
                     else outputParse[key] = this.renderByKey(key, item[key], depth);
                 });
 
@@ -140,8 +181,9 @@
             plansDOM.classList.toggle('isVisible', !isPlanSelectorView);
             plansSelDOM.classList.toggle('isVisible', isPlanSelectorView);
 
-            if (!isPlanSelectorView) {
+            if (isPlanSelectorView) {
                 this.updateUrlParm('');
+                PIPE.invoke(EVENTS.onHome, []);
             }
         },
         readUrl: function() {
@@ -164,6 +206,7 @@
             document.getElementById('plan-' + key).classList.add('isVisible');
             this.switchView(false);
             this.updateUrlParm(key);
+            PIPE.invoke(EVENTS.onPlanChange, [key]);
         },
         renderPlansSelector: function (key, item) {
             const { title, icon, bg, dates, words } = item;
@@ -201,9 +244,11 @@
                 sections.push(iWrapper);
 
                 const groupHtml = '<div class="area-main"><H1>' + header + '</H1>' + this.renderGroup(plan) + '</div>';
-                const menuHtml = '<div class="area-menu">' + ICONS.menu + '<input class="menu-toggle" type="checkbox"/>' +  this.renderMenu() + '</div>';
-                iWrapper.innerHTML = menuHtml + groupHtml;
+                iWrapper.innerHTML = groupHtml;
 
+                const menu = this.renderMenu();
+                menu.setAttribute('data-plan', id);
+                menuItemsDOM.appendChild(menu);
                 plansDOM.appendChild(iWrapper);
                 plansSelDOM.appendChild(this.renderPlansSelector(id, item));
             });
@@ -222,6 +267,10 @@
             window.addEventListener("popstate", () => {
                 this.readUrl();
             });
+
+            PIPE.subscribe(EVENTS.onMenuLoaded, this.readUrl.bind(this));
+            window.onHome = this.switchView.bind(this);
+            window.onPlan = this.switchPlan.bind(this);
         }
     };
 

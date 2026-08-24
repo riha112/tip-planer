@@ -64,6 +64,7 @@
     const publicComments = {
         cache: false,
         load: async function() {
+            return {};
             if(!window.crypt.getKey()) return {};
             if (this.cache) return this.cache;
             const data  = await fetch(
@@ -174,10 +175,16 @@
         renderComments: async function() {
             await this.getComments();
             this.removeOldComments();
+            const detachedComments = [];
             Object.keys(this.comments).forEach((key) => {
                 const el = document.querySelector('[data-hash="' + key + '"]');
-                if (!el) return;
                 const items =  this.comments[key].items;
+
+                if (!el) {
+                    items.forEach((i) => detachedComments.push(i));
+                    return;
+                }
+
                 if (!items || !items.length) return;
 
                 el.classList.add('comment-holder-dom');
@@ -209,6 +216,8 @@
                 
                 el.appendChild(domWrapper);
             });
+
+            window.setDetachedComments(detachedComments);
         }
     };
 
@@ -217,6 +226,13 @@
             uid: '',
             isHidden: true,
             isLoading: false,
+            detachedComments: [],
+            init: function() {
+                window.setDetachedComments = this.setDetachedComments();
+            },
+            setDetachedComments: function(comments) {
+                this.detachedComments = comments;
+            },
             onShow: function(uid) {
                 this.uid = uid;
                 this.isHidden = false;
