@@ -465,126 +465,6 @@ img {
   opacity: 0.5;
 }
 
-/* mobile.scss */
-@media (max-width: 900px) {
-  html,
-  body {
-    width: 100%;
-    overflow-x: hidden;
-    font-size: 15px;
-  }
-  #App {
-    display: block;
-    padding: 0;
-  }
-  h1 {
-    margin: 15px 0 5px 0;
-  }
-  .area-main {
-    max-width: 100%;
-    padding: 8px;
-    padding-top: 50px;
-  }
-  .area-main > .group {
-    padding: 0;
-  }
-  .area-menu {
-    width: 100%;
-    max-width: 100%;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.7882352941);
-    box-shadow: 0 0 25px #d5d5d5;
-    backdrop-filter: blur(5px);
-  }
-  .area-menu:has(.menu-toggle:checked) {
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.9215686275);
-  }
-  .area-menu .iMenu {
-    background-color: transparent;
-  }
-  .menu {
-    width: 100%;
-    margin-top: 20px;
-  }
-  .menu-link {
-    display: block;
-    padding: 10px 0;
-    font-size: 14px;
-  }
-  .group {
-    padding: 8px;
-  }
-  .group-title {
-    gap: 6px;
-  }
-  .group .group.gTicketOptions, .group .group.gTimes {
-    flex-direction: column;
-  }
-  .group-item {
-    padding: 8px;
-  }
-  .group-item:has(> .group-icon) {
-    padding-left: 8px !important;
-  }
-  .group-item:has(> .group-time) .group-title {
-    max-width: calc(100% - 130px);
-  }
-  .group-time {
-    display: inline-block;
-    width: fit-content;
-    position: absolute;
-    right: 0;
-    top: 9px;
-    margin: 0;
-    z-index: 4;
-  }
-  .group-icon {
-    width: 28px;
-    height: 28px;
-    top: 12px;
-    left: 5px;
-    position: static;
-  }
-  .group-transportationTime {
-    position: absolute;
-    width: fit-content;
-    margin: 0;
-    right: 0;
-    left: auto;
-    top: -2px;
-    z-index: 10;
-  }
-  .group-transportationTime::after {
-    display: none;
-  }
-  .group-links a {
-    word-break: break-word;
-  }
-  .group-location a {
-    flex-wrap: wrap;
-  }
-  .gal {
-    overflow-x: auto;
-  }
-  .gal-wrapper {
-    gap: 8px;
-  }
-  .gal-img {
-    min-width: 220px;
-    max-height: 220px;
-  }
-  .wechat:hover .wechat-img {
-    display: none;
-  }
-  .wechat-img {
-    display: block;
-    max-width: 120px;
-  }
-  .todo {
-    display: none;
-  }
-}
 .comment {
   position: fixed;
   left: 0;
@@ -902,7 +782,7 @@ body:not(.comment-mode-active) .comments-msgs {
 }
 .newMenu-item {
   display: flex;
-  gap: 6px;
+  gap: 0px;
   align-items: center;
   justify-content: center;
   padding: 10px 15px;
@@ -920,6 +800,7 @@ body:not(.comment-mode-active) .comments-msgs {
 .newMenu-item.isActive {
   background: #e0d7f3;
   color: #391d84;
+  gap: 6px;
 }
 .newMenu-item.isActive.newMenu-comment {
   background: #fbf0d4;
@@ -1078,6 +959,151 @@ body:not(.comment-mode-active) .comments-msgs {
   text-align: center;
   transform: translateX(-50%);
   white-space: nowrap;
+}
+
+/* mobile.scss */
+@media (max-width: 900px) {
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+    font-size: 15px;
+  }
+  #App {
+    display: block;
+    padding: 0;
+  }
+  h1 {
+    margin: 15px 0 5px 0;
+  }
+  .area-main {
+    max-width: 100%;
+    padding: 8px;
+    padding-top: 50px;
+  }
+  .area-main > .group {
+    padding: 0;
+  }
+  .area-menu {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.7882352941);
+    box-shadow: 0 0 25px #d5d5d5;
+    backdrop-filter: blur(5px);
+  }
+  .area-menu:has(.menu-toggle:checked) {
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9215686275);
+  }
+  .area-menu .iMenu {
+    background-color: transparent;
+  }
+  .menu {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .menu-link {
+    display: block;
+    padding: 10px 0;
+    font-size: 14px;
+  }
+  .group {
+    padding: 8px;
+  }
+  .group-title {
+    gap: 6px;
+  }
+  .group .group.gTicketOptions, .group .group.gTimes {
+    flex-direction: column;
+  }
+  .group-item {
+    padding: 8px;
+  }
+  .group-item:has(> .group-icon) {
+    padding-left: 8px !important;
+  }
+  .group-item:has(> .group-time) .group-title {
+    max-width: calc(100% - 130px);
+  }
+  .group-time {
+    display: inline-block;
+    width: fit-content;
+    position: absolute;
+    right: 0;
+    top: 9px;
+    margin: 0;
+    z-index: 4;
+  }
+  .group-icon {
+    width: 28px;
+    height: 28px;
+    top: 12px;
+    left: 5px;
+    position: static;
+  }
+  .group-transportationTime {
+    position: absolute;
+    width: fit-content;
+    margin: 0;
+    right: 0;
+    left: auto;
+    top: -2px;
+    z-index: 10;
+  }
+  .group-transportationTime::after {
+    display: none;
+  }
+  .group-links a {
+    word-break: break-word;
+  }
+  .group-location a {
+    flex-wrap: wrap;
+  }
+  .gal {
+    overflow-x: auto;
+  }
+  .gal-wrapper {
+    gap: 8px;
+  }
+  .gal-img {
+    min-width: 220px;
+    max-height: 220px;
+  }
+  .wechat:hover .wechat-img {
+    display: none;
+  }
+  .wechat-img {
+    display: block;
+    max-width: 120px;
+  }
+  .todo {
+    display: none;
+  }
+  .newMenu {
+    padding: 12px;
+    bottom: 12px;
+    gap: 8px;
+  }
+  .newMenu svg {
+    width: 20px;
+    height: auto;
+  }
+  .newMenu-item {
+    padding: 8px 13px;
+    border-radius: 40px;
+  }
+  .newMenu-menuWrapper {
+    bottom: 90px;
+  }
+  .newMenu-menuWrapperInner {
+    padding: 12px;
+  }
+  .comment-mode-notice {
+    font-size: 10px;
+    padding: 4px 16px;
+    top: calc(100% - 11px);
+  }
 }
 
 /*# sourceMappingURL=theme.css.map */
