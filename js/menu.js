@@ -90,16 +90,16 @@
     });
 
 
-    document.querySelectorAll('[data-href]').forEach((i) => {
-        const href = i.getAttribute('data-href');
-        i.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            const target = document.querySelector(href);
-            if (!target) return;
-            target.scrollIntoView({
-                behavior: "smooth"
-            });
+    document.addEventListener('click', function(e) {
+        const href = e.target.getAttribute('data-href');
+        if (!href) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        const target = document.querySelector(href);
+        if (!target) return;
+        target.scrollIntoView({
+            behavior: "smooth"
         });
     });
 
