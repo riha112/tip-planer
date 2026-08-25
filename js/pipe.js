@@ -2,7 +2,8 @@ const EVENTS = {
     onMenuChange: 'onMenuChange',
     onPlanChange: 'onPlanChange',
     onHome: 'onHome',
-    onMenuLoaded: 'onMenuLoaded'
+    onMenuLoaded: 'onMenuLoaded',
+    onToBuyUpdate: 'onToBuyUpdate',
 };
 
 const PIPE = {
