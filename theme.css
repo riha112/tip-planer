@@ -952,6 +952,10 @@ body:not(.comment-mode-active) .comments-msgs {
   border-radius: 10px;
   flex: 1;
 }
+.menu .date {
+  font-size: 11px;
+  color: #434343;
+}
 .menu .day-nr {
   text-transform: uppercase;
   border-radius: 30px;

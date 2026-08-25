@@ -1130,6 +1130,11 @@ body:not(.comment-mode-active) {
         flex: 1;
     }
 
+    .date {
+        font-size: 11px;
+        color: #434343;
+    }
+
     .day-nr {
         text-transform: uppercase;
         border-radius: 30px;
