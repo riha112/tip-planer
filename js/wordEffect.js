@@ -55,6 +55,11 @@
                 this.isHovering = false;
                 clearInterval(this.interval);
             });
+
+            PIPE.subscribe(EVENTS.onPlanChange, () => {
+                this.isHovering = false;
+                clearInterval(this.interval);
+            });
         }
     }
 }());

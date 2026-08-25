@@ -35,6 +35,10 @@ img {
     }
 }
 
+h1 {
+    text-align: center;
+}
+
 .plan-item {
     display: none;
 
@@ -176,6 +180,7 @@ img {
         &>.group {
             border: none;
             gap: 24px;
+            border-radius: 24px;
         }
     }
 }
@@ -186,6 +191,7 @@ img {
     background: #e0f4f4;
     color: #479696;
     margin-right: 12px;
+    border-radius: 20px;
 }
 
 .group {
@@ -232,6 +238,7 @@ img {
 
         &.gDefault {
             padding-bottom: 0;
+            border-top-left-radius: 16px;
 
             .gDefault {
                 &::before {
@@ -267,11 +274,14 @@ img {
             --accentColor: #b69375;
             flex-direction: row;
             border: 5px solid var(--accentColorBg);
+            border-radius: 16px;
 
             &::before {
                 content: 'TICKET OPTIONS';
                 top: -5px;
                 left: -5px;
+                border-radius: 0;
+                border-bottom-right-radius: 10px;
             }
 
             &>div {
@@ -284,11 +294,14 @@ img {
             --accentColor: #4d6486;
             flex-direction: row;
             border: 5px solid var(--accentColorBg);
+            border-radius: 16px;
 
             &::before {
                 content: 'TIMES';
                 top: -5px;
                 left: -5px;
+                border-radius: 0;
+                border-bottom-right-radius: 10px;
             }
 
             &>div {
@@ -307,6 +320,9 @@ img {
             background: var(--accentColorBg);
             color: var(--accentColor);
             letter-spacing: 1px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-top-left-radius: 10px;
         }
 
         .group-content {
@@ -320,6 +336,7 @@ img {
         display: flex;
         flex-direction: column;
         gap: 8px;
+        border-radius: 16px;
 
         &:has(>.group-icon) {
             padding-left: 52px;
@@ -341,6 +358,7 @@ img {
         padding: 4px 10px;
         font-weight: bold;
         color: #4f7cff;
+        border-radius: 10px;
     }
 
     &-icon {
@@ -355,6 +373,7 @@ img {
         justify-content: center;
         display: flex;
         top: 10px;
+        border-radius: 8px;
 
         svg {
             fill: #4b417b;
@@ -420,6 +439,8 @@ img {
         gap: 4px;
         align-items: center;
         color: #ce528d;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
 
         span {
             white-space: nowrap;
@@ -526,6 +547,7 @@ img {
     gap: 4px;
     background: #eef0f1;
     padding-top: 30px;
+    border-radius: 16px;
 
     &::before {
         content: 'WECHAT';
@@ -538,6 +560,7 @@ img {
         position: absolute;
         left: -4px;
         top: -4px;
+        border-bottom-right-radius: 10px;
     }
 
     &:hover {
@@ -969,6 +992,11 @@ body:not(.comment-mode-active) {
         fill: #2f2f3a;
     }
 
+    &-filterItems {
+        padding-inline: 10px;
+        overflow: hidden;
+    }
+
     &-item {
         display: flex;
         gap: 0px;
@@ -1236,7 +1264,7 @@ body:not(.comment-mode-active) {
     }
 
     h1 {
-        margin: 5px 0 5px 0;
+        margin: 0 0 8px 0;
     }
 
     .area {
@@ -1323,6 +1351,7 @@ body:not(.comment-mode-active) {
             left: auto;
             top: -2px;
             z-index: 10;
+            border-radius: 10px;
 
             &::after {
                 display: none;
@@ -1431,12 +1460,17 @@ body:not(.comment-mode-active) {
         padding: 4px;
         flex-direction: column;
     }
+
+    .plan-item.isVisible {
+        padding: 4px;
+        padding-bottom: 70px;
+    }
 }
 
 .filter {
     flex-direction: row;
     gap: 8px;
-    padding: 12px 20px;
+    padding: 12px 10px;
     overflow: auto;
     display: none;
 

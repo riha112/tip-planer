@@ -264,7 +264,9 @@
                 iWrapper.classList.add('plan-item');
                 sections.push(iWrapper);
 
-                const groupHtml = '<div class="area-main"><H1>' + header + '</H1>' + this.renderGroup(plan) + '</div>';
+                let headerHtml = '';
+                [...header].forEach((c) => headerHtml += `<span>${c}</span>`);
+                const groupHtml = '<div class="area-main"><H1>' + headerHtml + '</H1>' + this.renderGroup(plan) + '</div>';
                 iWrapper.innerHTML = groupHtml;
 
                 const menu = this.renderMenu();
