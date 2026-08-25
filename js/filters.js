@@ -4,6 +4,7 @@
     let isIn = false;
     let svg = null;
     let sKey = null;
+    let filters = null;
 
     const filterFn = function() {
         if(!filterables || !filterables.length) {
@@ -28,8 +29,17 @@
         });
     }
 
+    const resetFn = () => {
+        activeFilters = {};
+        filterFn();
+        filters.forEach((i) =>  i.classList.remove('isActive'));
+    };
+
+    PIPE.subscribe(EVENTS.onPlanChange, resetFn);
+
     window.initFilters = function(selector) {
-        document.querySelectorAll(selector).forEach((i) => {
+        filters = document.querySelectorAll(selector);
+        filters.forEach((i) => {
             const s = i.querySelector('svg');
             const key = s.classList.toString();
             i.addEventListener('click', () => {

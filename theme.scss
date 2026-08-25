@@ -1032,6 +1032,12 @@ body:not(.comment-mode-active) {
             }
         }
 
+        &.isFilter {
+            margin-inline: auto;
+            width: auto;
+            display: inline-block;
+        }
+
         &.isActive {
             max-height: min(500px, 80vh);
         }
@@ -1411,14 +1417,14 @@ body:not(.comment-mode-active) {
     }
 
     &-item {
-        aspect-ratio: 1 / 1;
-        flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         padding: 6px;
         border-radius: 10px;
+        width: 36px;
+        height: 36px;
 
         svg {
             fill: #322968;

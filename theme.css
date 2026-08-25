@@ -861,6 +861,11 @@ body:not(.comment-mode-active) .comments-msgs {
 .newMenu-menuWrapperInner.isFilter {
   padding: 0px;
 }
+.newMenu-menuWrapper.isFilter {
+  margin-inline: auto;
+  width: auto;
+  display: inline-block;
+}
 .newMenu-menuWrapper.isActive {
   max-height: min(500px, 80vh);
 }
@@ -1149,14 +1154,14 @@ body:not(.comment-mode-active) .comments-msgs {
   display: flex;
 }
 .filter-item {
-  aspect-ratio: 1/1;
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   padding: 6px;
   border-radius: 10px;
+  width: 36px;
+  height: 36px;
 }
 .filter-item svg {
   fill: #322968;

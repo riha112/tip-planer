@@ -80,7 +80,6 @@
     });
 
     PIPE.subscribe(EVENTS.onPlanChange, (key) => {
-        console.debug([key, PLAN[key].title]);
         disableAll();
         const e = document.getElementById('planMenu');
         e.querySelector('.newMenu-itemText').innerText = PLAN[key].title;
