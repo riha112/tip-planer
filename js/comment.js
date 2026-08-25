@@ -64,7 +64,6 @@
     const publicComments = {
         cache: false,
         load: async function() {
-            // return {};
             if(!window.crypt.getKey()) return {};
             if (this.cache) return this.cache;
             const data  = await fetch(
@@ -93,6 +92,7 @@
             if(!window.crypt.getKey()) return;
             if (!uid || !comment) return;
 
+            this.cache = false;
             let comments = await this.load();
             if (!comments[uid]) comments[uid] = {
                 uid: 0,
@@ -128,6 +128,7 @@
         },
         delete: async function(uid, commentId) {
             if(!window.crypt.getKey()) return;
+            this.cache = false;
             let comments = await this.load();
             if (!comments[uid]) return;
             let i = comments[uid].items.findIndex((c) => c.id === commentId);

@@ -40,6 +40,7 @@
             if(!window.crypt.getKey()) return;
             if (!uid || !toBuy) return;
 
+            this.cache = false;
             let toBuys = await this.load();
             if (!toBuys[uid]) toBuys[uid] = {
                 uid: 0,
@@ -74,6 +75,7 @@
         },
         delete: async function(uid, toBuyId) {
             if(!window.crypt.getKey()) return;
+            this.cache = false;
             let toBuys = await this.load();
             if (!toBuys[uid]) return;
             let i = toBuys[uid].items.findIndex((c) => c.id === toBuyId);
