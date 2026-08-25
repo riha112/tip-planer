@@ -33,7 +33,7 @@
     </div>
 
     <div x-data="initComment()" @showCommentForm.window="onShow($event.detail.uid)" x-cloak>
-        <div id="Comment" class="comment" :class="{'isHidden': isHidden}">
+        <div id="Comment" class="comment" @click="onBtnClose" :class="{'isHidden': isHidden}">
             <div class="comment-form">
                 <div class="comment-header">
                     <span>Add Note</span>
