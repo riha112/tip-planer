@@ -4,8 +4,8 @@
     const plansDOM = document.getElementById(plansHldId);
     const plansSelDOM = document.getElementById(plansSelectorHldId);
     const menuItemsDOM = document.getElementById('menuItems');
+    const filterItemsDOM = document.getElementById('filterItems');
     
-    let isPlanSelectorView = false;
     let titleCounter = 0;
     const titlePrefix = 'aTtl';
 
@@ -13,8 +13,23 @@
 
     const app = {
         menu: [],
+        filters: {},
+        renderFilter: function() {
+            if (!this.filters) return null;
+            let filterDom = document.createElement('div');
+            filterDom.className = 'filter';
+
+            Object.keys(this.filters).forEach((f) => {
+                let filterItemDom = document.createElement('div');
+                filterItemDom.className = 'filter-item';
+                filterItemDom.innerHTML = f;
+                filterDom.appendChild(filterItemDom);
+            });
+
+            return filterDom;
+        },
         renderMenu: function() {
-            if (!this.menu) return '';
+            if (!this.menu) return null;
             let menuDom = document.createElement('div');
             menuDom.className = 'menu';
             let menuUlDom = document.createElement('div');
@@ -91,6 +106,10 @@
         renderByKey: function (key, data, depth = 0) {
             if (!data || ['type'].includes(key)) return '';
             let id = '';
+
+            if (key === 'icon') {
+                this.filters[data] = true;
+            }
 
             if (key === 'time') {
                 if (data.from && data.till) {
@@ -236,6 +255,7 @@
         renderPlans: function (items) {
             Object.keys(items).forEach((id) => {
                 this.menu = [];
+                this.filters = {};
                 const item = items[id];
                 const { header, plan } = item;
 
@@ -250,9 +270,16 @@
                 const menu = this.renderMenu();
                 menu.setAttribute('data-plan', id);
                 menuItemsDOM.appendChild(menu);
+
+                const filter = this.renderFilter();
+                filter.setAttribute('data-plan', id);
+                filterItemsDOM.appendChild(filter)
+
                 plansDOM.appendChild(iWrapper);
                 plansSelDOM.appendChild(this.renderPlansSelector(id, item));
             });
+
+            if (window.initFilters) window.initFilters('.filter-item');
         },
         run: async function (decrypt = false) {
             let jsonData = '';

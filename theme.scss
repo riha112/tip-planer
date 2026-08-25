@@ -90,7 +90,6 @@ img {
     &,
     * {
         transition: all ease 0.25s;
-        ;
     }
 
     &-icon {
@@ -312,6 +311,11 @@ img {
 
         &:has(>.group-icon) {
             padding-left: 52px;
+        }
+
+        &.filterable-hidden:not(:has(.filterable-visible)),
+        &:not(.filterable-visible):has(.filterable-hidden):not(:has(.filterable-visible)) {
+            display: none;
         }
     }
 
@@ -927,8 +931,13 @@ body:not(.comment-mode-active) {
     box-shadow: 0 0 25px 0px #3b3b3b36;
     z-index: 9999;
 
+    &.isFilter {
+        border-radius: 24px;
+    }
+
     &, * {
         transition: all 0.25s ease;
+        scrollbar-width: none;
     }
 
     svg {
@@ -997,7 +1006,7 @@ body:not(.comment-mode-active) {
         position: fixed;
         left: 50%;
         transform: translateX(-50%);
-        max-width: min(420px, calc(100vw - 10px));
+        max-width: min(420px, calc(100vw - 20px));
         width: 100%;
         background: #ffffffac;
         background: linear-gradient(321deg,rgba(255, 255, 255, 0.7) 0%, rgba(235, 235, 235, 0.7) 100%);
@@ -1007,12 +1016,20 @@ body:not(.comment-mode-active) {
         border-radius: 30px;
         z-index: 999999;
 
+        * {
+            scrollbar-width: none;
+        }
+
         &Inner {
             padding: 20px;
             display: flex;
             gap: 10px;
             flex-direction: column;
             width: 100%;
+
+            &.isFilter {
+                padding: 0px;
+            }
         }
 
         &.isActive {
@@ -1338,6 +1355,15 @@ body:not(.comment-mode-active) {
         &-item {
             padding: 8px 13px;
             border-radius: 40px;
+            font-size: 12px;
+        }
+
+        &-comment,
+        &-menu,
+        &-filter {
+            .newMenu-itemText {
+                display: none;
+            }
         }
 
         &-menuWrapper {
@@ -1352,9 +1378,8 @@ body:not(.comment-mode-active) {
     .comment-mode-notice {
         font-size: 10px;
         padding: 4px 16px;
-        top: calc(100% - 11px);
+        top: -30px;
     }
-
 
     .plan-selector {
         padding: 25px;
@@ -1371,5 +1396,39 @@ body:not(.comment-mode-active) {
         gap: 16px;
         padding: 10px;
         flex-direction: column;
+    }
+}
+
+.filter {
+    flex-direction: row;
+    gap: 8px;
+    padding: 12px 20px;
+    overflow: auto;
+    display: none;
+
+    &.isActive {
+        display: flex;
+    }
+
+    &-item {
+        aspect-ratio: 1 / 1;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 10px;
+
+        svg {
+            fill: #322968;
+        }
+
+        &.isActive {
+            background: #f9e2ed;
+            svg {
+                fill: #ce528d;
+            }
+        }
     }
 }

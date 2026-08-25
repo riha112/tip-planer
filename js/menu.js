@@ -1,6 +1,10 @@
 (function() {
     let items = [...document.getElementsByClassName('newMenu-item')];
     const menuDom = document.getElementById('newMenuMenu');
+    const filterDom = document.getElementById('newMenuFilter');
+
+    const menuItemDom = document.getElementById('menuMenu');
+    const filterItemDom = document.getElementById('filterMenu');
     
     let plans = ['china', 'korea'];
     let activePlanId = 0;
@@ -8,6 +12,19 @@
     const fns = {
         onMenu: function(isActive, item) {
             menuDom.classList.toggle('isActive', isActive);
+
+            if (isActive) {
+                filterDom.classList.remove('isActive');
+                filterItemDom.classList.remove('isActive');
+            }
+        },
+        onFilter: function(isActive, item) {
+            filterDom.classList.toggle('isActive', isActive);
+
+            if (isActive) {
+                menuDom.classList.remove('isActive');
+                menuItemDom.classList.remove('isActive');
+            }
         },
         onComments: function(isActive, item) {
             window.commentMode = isActive;
@@ -36,10 +53,14 @@
     };
 
     const setMenuState = function(isDisabled) {
+        filterDom.classList.remove('isActive')
         menuDom.classList.remove('isActive');
-        const ee = document.getElementById('menuMenu');
-        ee.classList.toggle('isDisabled', isDisabled);
-        ee.classList.remove('isActive');
+
+        menuItemDom.classList.toggle('isDisabled', isDisabled);
+        menuItemDom.classList.remove('isActive');
+    
+        filterItemDom.classList.toggle('isDisabled', isDisabled);
+        filterItemDom.classList.remove('isActive');
     };
 
     const disableAll = function() {
@@ -66,7 +87,7 @@
         e.classList.add('isActive');
         setMenuState(false);
 
-        document.querySelectorAll('.menu').forEach((m) => {
+        document.querySelectorAll('[data-plan]').forEach((m) => {
             m.classList.toggle('isActive', m.getAttribute('data-plan') == key);
         });
     });
@@ -88,7 +109,6 @@
             }
         });
     });
-
 
     document.addEventListener('click', function(e) {
         const href = e.target.getAttribute('data-href');

@@ -265,6 +265,9 @@ img {
 .group-item:has(> .group-icon) {
   padding-left: 52px;
 }
+.group-item.filterable-hidden:not(:has(.filterable-visible)), .group-item:not(.filterable-visible):has(.filterable-hidden):not(:has(.filterable-visible)) {
+  display: none;
+}
 .group-time {
   position: absolute;
   right: 16px;
@@ -774,8 +777,12 @@ body:not(.comment-mode-active) .comments-msgs {
   box-shadow: 0 0 25px 0px rgba(59, 59, 59, 0.2117647059);
   z-index: 9999;
 }
+.newMenu.isFilter {
+  border-radius: 24px;
+}
 .newMenu, .newMenu * {
   transition: all 0.25s ease;
+  scrollbar-width: none;
 }
 .newMenu svg {
   fill: #2f2f3a;
@@ -831,7 +838,7 @@ body:not(.comment-mode-active) .comments-msgs {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  max-width: min(420px, 100vw - 10px);
+  max-width: min(420px, 100vw - 20px);
   width: 100%;
   background: rgba(255, 255, 255, 0.6745098039);
   background: linear-gradient(321deg, rgba(255, 255, 255, 0.7) 0%, rgba(235, 235, 235, 0.7) 100%);
@@ -841,12 +848,18 @@ body:not(.comment-mode-active) .comments-msgs {
   border-radius: 30px;
   z-index: 999999;
 }
+.newMenu-menuWrapper * {
+  scrollbar-width: none;
+}
 .newMenu-menuWrapperInner {
   padding: 20px;
   display: flex;
   gap: 10px;
   flex-direction: column;
   width: 100%;
+}
+.newMenu-menuWrapperInner.isFilter {
+  padding: 0px;
 }
 .newMenu-menuWrapper.isActive {
   max-height: min(500px, 80vh);
@@ -1094,6 +1107,10 @@ body:not(.comment-mode-active) .comments-msgs {
   .newMenu-item {
     padding: 8px 13px;
     border-radius: 40px;
+    font-size: 12px;
+  }
+  .newMenu-comment .newMenu-itemText, .newMenu-menu .newMenu-itemText, .newMenu-filter .newMenu-itemText {
+    display: none;
   }
   .newMenu-menuWrapper {
     bottom: 90px;
@@ -1104,7 +1121,7 @@ body:not(.comment-mode-active) .comments-msgs {
   .comment-mode-notice {
     font-size: 10px;
     padding: 4px 16px;
-    top: calc(100% - 11px);
+    top: -30px;
   }
   .plan-selector {
     padding: 25px;
@@ -1120,6 +1137,35 @@ body:not(.comment-mode-active) .comments-msgs {
     padding: 10px;
     flex-direction: column;
   }
+}
+.filter {
+  flex-direction: row;
+  gap: 8px;
+  padding: 12px 20px;
+  overflow: auto;
+  display: none;
+}
+.filter.isActive {
+  display: flex;
+}
+.filter-item {
+  aspect-ratio: 1/1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 10px;
+}
+.filter-item svg {
+  fill: #322968;
+}
+.filter-item.isActive {
+  background: #f9e2ed;
+}
+.filter-item.isActive svg {
+  fill: #ce528d;
 }
 
 /*# sourceMappingURL=theme.css.map */
