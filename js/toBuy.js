@@ -1,6 +1,4 @@
-(async function() {
-    const shops = document.querySelectorAll('.group-item:has(>.group-icon>.iShop)');
-    
+(async function() {    
     function rd(c = false, p = false, iHtml = false) {
         const dd = document.createElement('div');
         if (c) dd.className = c;
@@ -144,6 +142,8 @@
     };
 
     function initShopList() {
+        const shops = document.querySelectorAll('.group-item:has(>.group-icon>.iShop)');
+
         shops.forEach((shop) => {
             const title = shop.querySelector('.group-title').innerText;
             const wrapper = rd('shop-list-form isClosed', shop, `
@@ -206,8 +206,9 @@
         });
     }
 
-    initShopList();
-
-    window.toBuy = await publicToBuys.load();
-    PIPE.invoke(EVENTS.onToBuyUpdate);
+    window.initToBuy = async function() {
+        initShopList();
+        window.toBuy = await publicToBuys.load();
+        PIPE.invoke(EVENTS.onToBuyUpdate);
+    }
 })();

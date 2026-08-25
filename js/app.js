@@ -302,6 +302,10 @@
             PIPE.subscribe(EVENTS.onMenuLoaded, this.readUrl.bind(this));
             window.onHome = this.switchView.bind(this);
             window.onPlan = this.switchPlan.bind(this);
+
+            if (window.initToBuy) {
+                window.initToBuy();
+            }
         }
     };
 
