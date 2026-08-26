@@ -1400,6 +1400,10 @@ body.isCompactView .group-wechat {
   display: none !important;
 }
 
+.mobile-only {
+  display: none;
+}
+
 /* mobile.scss */
 @media (max-width: 900px) {
   html,
@@ -1533,12 +1537,45 @@ body.isCompactView .group-wechat {
   .newMenu-menuWrapperInner {
     padding: 12px;
   }
+  .shop-list-form {
+    padding: 15px 10px 10px 10px;
+  }
+  .shop-list-item {
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+  }
+  .shop-list-item > div {
+    padding: 0;
+  }
+  .shop-list-item > div:first-child {
+    padding-top: 6px;
+  }
+  .shop-list-action {
+    border-radius: 10px;
+    flex-direction: column;
+  }
+  .shop-list-total {
+    width: 100%;
+    text-align: center;
+  }
+  .shop-list-add {
+    width: 100%;
+    aspect-ratio: unset;
+    gap: 8px;
+    font-weight: 600;
+    color: white;
+    align-items: center;
+  }
   .shop-list-inputs {
     flex-direction: column;
   }
   .shop-list-inputs .shop-list-input {
     max-width: 100%;
     width: 100%;
+  }
+  span.mobile-only {
+    display: inline-block;
   }
   .comment-mode-notice {
     font-size: 10px;

@@ -23,6 +23,7 @@
         return n.toFixed(2);
     }
 
+    const CACHE = 'TB_CH';
     const BIN_ID = '6a8ddd3af5f4af5e29415027';
     const API = '$2a$10$5HXDXhg.59nAhDW8p45cu.0RhBu/Qh8Wx5GS47CrX5b0a3cT7C9ci';
     const publicToBuys = {
@@ -45,6 +46,7 @@
                 jsonData = await window.crypt.decrypt(jsonData, false, '', false);
                 if (!jsonData) return {};
                 this.cache = JSON.parse(jsonData);
+                localStorage.setItem(CACHE, jsonData);
             } catch (e){
                 console.debug(e);
                 return {};
@@ -112,6 +114,12 @@
             this.cache = false;
         }
     };
+
+    let cd = localStorage.getItem(CACHE);
+    if (cd) {
+        cd = JSON.parse(cd);
+        window.toBuy = cd;
+    }
 
     window.initShopData = function(uuidParent) {
         return {
@@ -198,7 +206,6 @@
                     prio: this.prio
                 };
 
-                console.debug([this.prio]);
                 if (!this.uuid) return this.onClose();
                 this.isLoading = true;
                     await publicToBuys.save(this.uuid, item);
@@ -275,7 +282,7 @@
                         </div>
                     </div>
                     <div @click="onSubmit" class="shop-list-add">
-                        ${ICONS.add}
+                        <span class="mobile-only">Add item</span> ${ICONS.add}
                     </div>
                 </div>
                 <div class="shop-list-loader" x-hide x-show="isLoading">
