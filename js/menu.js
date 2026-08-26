@@ -2,9 +2,11 @@
     let items = [...document.getElementsByClassName('newMenu-item')];
     const menuDom = document.getElementById('newMenuMenu');
     const filterDom = document.getElementById('newMenuFilter');
+    const configDom = document.getElementById('newMenuConfig');
 
     const menuItemDom = document.getElementById('menuMenu');
     const filterItemDom = document.getElementById('filterMenu');
+    const configItemDom = document.getElementById('configMenu');
     
     let plans = ['china', 'korea'];
     let activePlanId = 0;
@@ -14,16 +16,27 @@
             menuDom.classList.toggle('isActive', isActive);
 
             if (isActive) {
-                filterDom.classList.remove('isActive');
-                filterItemDom.classList.remove('isActive');
+                [filterDom, filterItemDom, configDom, configItemDom].forEach(
+                    (i) => i.classList.remove('isActive')
+                );
+            }
+        },
+        onConfig: function(isActive, item) {
+            configDom.classList.toggle('isActive', isActive);
+
+            if (isActive) {
+                [menuDom, menuItemDom, filterDom, filterItemDom].forEach(
+                    (i) => i.classList.remove('isActive')
+                );
             }
         },
         onFilter: function(isActive, item) {
             filterDom.classList.toggle('isActive', isActive);
 
             if (isActive) {
-                menuDom.classList.remove('isActive');
-                menuItemDom.classList.remove('isActive');
+                [menuDom, menuItemDom, configDom, configItemDom].forEach(
+                    (i) => i.classList.remove('isActive')
+                );
             }
         },
         onComments: function(isActive, item) {
@@ -61,6 +74,9 @@
     
         filterItemDom.classList.toggle('isDisabled', isDisabled);
         filterItemDom.classList.remove('isActive');
+
+        configItemDom.classList.toggle('isDisabled', isDisabled);
+        configItemDom.classList.remove('isActive');
     };
 
     const disableAll = function() {

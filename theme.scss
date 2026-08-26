@@ -1410,7 +1410,7 @@ body:not(.comment-mode-active) {
     .newMenu {
         padding: 12px;
         bottom: 12px;
-        gap: 8px;
+        gap: 5px;
 
         svg {
             width: 20px;
@@ -1418,7 +1418,7 @@ body:not(.comment-mode-active) {
         }
 
         &-item {
-            padding: 8px 13px;
+            padding: 8px 11px;
             border-radius: 40px;
             font-size: 12px;
         }
@@ -1648,7 +1648,7 @@ body:not(.comment-mode-active) {
         &[data-prio="10"],
         &[data-prio="15"],
         &[data-prio="20"] {
-            padding-top: 20px;
+            padding-top: 25px;
             position: relative;
 
             &::before {
@@ -1821,5 +1821,86 @@ body:not(.comment-mode-active) {
         border-radius: 10px;
         color: #697750;
         display: inline-block;
+    }
+}
+
+.config-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+
+    &-title {
+        flex: 1;
+    }
+
+    &-toggle {
+        --var-toggle-bg-active: #d7e5d3;
+        --var-toggle-fg-active: #a5bd7b;
+        --var-toggle-bg-inactive: #f1c7db;
+        --var-toggle-fg-inactive: #df659f;
+
+        height: 24px;
+        width: 45px;
+        border-radius: 30px;
+        background: var(--var-toggle-bg-active);
+        cursor: pointer;
+        border: 4px solid var(--var-toggle-bg-active);
+        transition: all 0.25s ease;
+        position: relative;
+
+        &.isDisabled {
+            text-align: left;
+            background: var(--var-toggle-bg-inactive);
+            border-color: var(--var-toggle-bg-inactive);
+
+            .config-item {
+                &-toggle {
+                    &-bar {
+                        background: var(--var-toggle-fg-inactive);
+                        left: 0;
+                    }
+                }
+            }
+        }
+
+        &-bar {
+            transition: all 0.25s ease;
+            height: 100%;
+            aspect-ratio: 1 / 1;
+            display: inline-block;
+            background: var(--var-toggle-fg-active);
+            border-radius: 50%;
+            overflow: hidden;
+            position: absolute;
+            left: calc(100% - 16px);
+            top: 0;
+        }
+    }
+}
+
+body.hideGallery {
+    .group-gallery {
+        display: none !important;
+    }
+}
+
+body.hideShoppingCart {
+    .shop-list-form {
+        display: none !important;
+    }
+}
+
+body.hideWeChat {
+    .group-wechat {
+        display: none !important;
+    }
+}
+
+body.isCompactView {
+    .group-gallery,
+    .shop-list-form,
+    .group-wechat {
+        display: none !important;
     }
 }
