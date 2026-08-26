@@ -1552,6 +1552,7 @@ body:not(.comment-mode-active) {
 
         &.isClosed {
             padding: 2px;
+            min-height: 34px;
 
             .shop-list {
                 &-list,
@@ -1616,16 +1617,73 @@ body:not(.comment-mode-active) {
         flex-direction: row;
         gap: 10px;
         align-items: center;
+        filter: grayscale(0);
+        transition: filter 0.25s ease;
 
         &:nth-child(odd) {
             background: #6580571c;
         }
 
         &.isBought {
-            .shop-list-item-content {
-                text-decoration: line-through;
+            filter: grayscale(0.8);
+            text-decoration: line-through;
+        }
+
+        &[data-prio="1"] + [data-prio="1"],
+        &[data-prio="5"] + [data-prio="5"], 
+        &[data-prio="10"] + [data-prio="10"], 
+        &[data-prio="15"] + [data-prio="15"],
+        &[data-prio="20"] + [data-prio="20"] {
+            padding-top: 0;
+            
+            &::before {
+                display: none;
             }
         }
+
+        template + &.isBought,
+        &:not(.isBought) + .isBought,
+        &[data-prio="1"],
+        &[data-prio="5"],
+        &[data-prio="10"],
+        &[data-prio="15"],
+        &[data-prio="20"] {
+            padding-top: 20px;
+            position: relative;
+
+            &::before {
+                content: 'Bought';
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                font-size: 12px;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                width: 100%;
+                padding: 4px;
+                background: #bed1be;
+                text-align: center;
+                color: black;
+            }
+        }
+
+        &[data-prio="1"],
+        &[data-prio="5"],
+        &[data-prio="10"],
+        &[data-prio="15"],
+        &[data-prio="20"] {
+            &::before {
+                background: #e4e7e3;
+                border-bottom: 1px solid #c7cdc9;
+            }
+        }
+
+        &[data-prio="1"]::before { content: 'Important'; }
+        &[data-prio="5"]::before { content: 'Would be great'; }
+        &[data-prio="10"]::before { content: 'Thinking'; }
+        &[data-prio="15"]::before { content: 'Low priority'; }
+
 
         &-content {
             flex: 1;
@@ -1685,11 +1743,18 @@ body:not(.comment-mode-active) {
             }
         }
     }
+
+    &-inputs {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        flex: 1;
+    }
     
     &-input {
         flex: 1;
 
-        input {
+        input, select {
             padding: 12px 20px;
             border-radius: 30px;
             border: none;
@@ -1699,6 +1764,23 @@ body:not(.comment-mode-active) {
             font-size: 16px;
             opacity: 0.75;
             color: black;
+            background: white;
+            text-overflow: ellipsis;
+        }
+
+        select {
+            background: #a5c0e1;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+        }
+
+        &.isPrice {
+            max-width: 90px;
+        }
+
+        &.isUrl, &.isPrio {
+            max-width: 140px;
         }
     }
 

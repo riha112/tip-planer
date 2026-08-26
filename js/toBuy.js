@@ -1,4 +1,11 @@
-(async function() {    
+(async function() {
+    const PRIO_MAP = [
+        { i: 1, l: 'Important' },
+        { i: 5, l: 'Would Be Great' },
+        { i: 10, l: 'Thinking' },
+        { i: 15, l: 'Low Priority' },
+    ];
+
     function rd(c = false, p = false, iHtml = false) {
         const dd = document.createElement('div');
         if (c) dd.className = c;
@@ -6,6 +13,15 @@
         if (iHtml) dd.innerHTML = iHtml;
         return dd;
     };
+
+    function renderPrice(value) {
+        const n = Number(value);
+        if (isNaN(n)) {
+            return '0.00';
+        }
+
+        return n.toFixed(2);
+    }
 
     const BIN_ID = '6a8ddd3af5f4af5e29415027';
     const API = '$2a$10$5HXDXhg.59nAhDW8p45cu.0RhBu/Qh8Wx5GS47CrX5b0a3cT7C9ci';
@@ -73,6 +89,17 @@
                 })
             });
         },
+        updateItem: async function(uid, toBuy) {
+            if(!window.crypt.getKey()) return;
+            this.cache = false;
+            let toBuys = await this.load();
+            if (!toBuys[uid]) return;
+            const idx = toBuys[uid].items.findIndex((c) => c.id === toBuy.id);
+            if (idx < 0) return;
+            toBuys[uid].items[idx] = toBuy;
+            await this.saveNewData(toBuys);
+            this.cache = false;
+        },
         delete: async function(uid, toBuyId) {
             if(!window.crypt.getKey()) return;
             this.cache = false;
@@ -88,11 +115,13 @@
 
     window.initShopData = function(uuidParent) {
         return {
+            pMap: PRIO_MAP,
             uuid: uuidParent,
             name: '',
             price: 0,
             url: '',
-            isOpen: false,
+            prio: PRIO_MAP[0].i,
+            isOpen: true,
             isLoading: false,
             items: [],
             count: 0,
@@ -102,34 +131,74 @@
                     this.getItems();
                 });
             },
+            renderPrice: renderPrice,
             getItems: function() {
                 if (window.toBuy && window.toBuy[this.uuid]) {
-                    this.items = [...window.toBuy[this.uuid].items];
-                    console.debug([this.items]);
+                    this.items = window.toBuy[this.uuid].items;
+                    this.items.sort((a, b) => {
+                        if (a.isBought) return true;
+                        if (b.isBought) return false;
+
+                        let aPrio = +(a.prio ? a.prio : PRIO_MAP[0].i);
+                        let bPrio = +(b.prio ? b.prio : PRIO_MAP[0].i);
+
+                        if (aPrio === bPrio) return +a.id > +b.id;
+                        return aPrio > bPrio;
+                    });
                 } else {
                     this.items = [];
                 }
             },
             getTotal: function() {
-                let total = 0;
-                this.items.forEach((i) => total += (+(i.price ? i.price : 0)));
-                return `Total: ${total} €`;
+                let total = 0, left = 0, amount = 0;
+                this.items.forEach((i) => {
+                    amount = +this.renderPrice(i.price);
+                    total += amount;
+                    if (!i.isBought) left += amount;
+                });
+
+                let label = `Total: ${this.renderPrice(total)} €`;
+
+                if (total !== left) {
+                    return`Left: ${this.renderPrice(left)} € (${label})`;
+                }
+
+                return label;
+
+            },
+            onToggle: async function (itemId) {
+                this.isLoading = true;
+                    const i = this.items.find((e) => e.id === itemId);
+                    if (i) {
+                        i.isBought = !i.isBought;
+                        await publicToBuys.updateItem(uuidParent, i);
+                        PIPE.invoke(EVENTS.onToBuyUpdate);
+                    }
+                this.isLoading = false;
             },
             onDelete: async function(itemId) {
                 this.isLoading = true;
+                    const idx = this.items.findIndex((i) => i.id === itemId);
+                    if (idx >= 0) delete this.items[idx];
                     await publicToBuys.delete(uuidParent, itemId);
+                    window.toBuy = await publicToBuys.load();
                     PIPE.invoke(EVENTS.onToBuyUpdate);
                 this.isLoading = false;
             },
             onSubmit: async function() {
+                if (!this.name) return;
+                if (this.price && isNaN(Number(this.price))) return;
+
                 const item = {
                     content: this.name,
                     url: this.url,
                     price: this.price,
                     isBought: false,
-                    uuidParent: this.uuidParent
+                    uuidParent: this.uuidParent,
+                    prio: this.prio
                 };
 
+                console.debug([this.prio]);
                 if (!this.uuid) return this.onClose();
                 this.isLoading = true;
                     await publicToBuys.save(this.uuid, item);
@@ -152,20 +221,23 @@
                 <div class="shop-list-title" @click="isOpen = !isOpen">${ICONS.list} 
                     <span x-text="'Shopping Cart (' + items.length + ')'"></span> 
                 </div>
+                <template x-if="items && items.length">
                 <div class="shop-list-list">
                     <template x-for="item in items">
-                        <div class="shop-list-item" :class="{'isBought': item.isBought}">
+                        <div class="shop-list-item" :data-prio="item.prio ? item.prio : pMap[0].i" :class="{'isBought': item.isBought}">
                             <div class="shop-list-item-content" x-html="item.content">
                             </div>
                             <template x-if="item.url">
                             <a class="shop-list-item-link" :href="item.url">
-            ${ICONS.link} Link
+                                ${ICONS.link} Link
                             </a>
                             </template>
-                            <div class="shop-list-item-price" x-html="(item.price ? item.price : 0) + ' €'">
+                            <template x-if="item.price">
+                            <div class="shop-list-item-price" x-text="renderPrice(item.price) + ' €'">
                             </div>
+                            </template>
                             <div class="shop-list-item-actions">
-                                <div class="shop-list-item-action shop-list-item-toggle">
+                                <div @click="onToggle(item.id)" class="shop-list-item-action shop-list-item-toggle">
                                     ${ICONS.check}
                                 </div>
                                 <div @click="onDelete(item.id)" class="shop-list-item-action shop-list-item-remove">
@@ -175,19 +247,32 @@
                         </div>
                     </template>
                 </div>
+                </template>
+                <template x-if="items && items.length">
                 <div class="shop-list-summary">
                     <div class="shop-list-total" x-html="getTotal()">
                     </div>
                 </div>
+                </template>
                 <div class="shop-list-action">
-                    <div class="shop-list-input" style="flex: 2">
-                        <input x-model="name" type="text" placeholder="Item name...">
-                    </div>
-                    <div class="shop-list-input" style="flex: 1">
-                        <input x-model="url" type="text" placeholder="Ref URL...">
-                    </div>
-                    <div class="shop-list-input">
-                        <input x-model="price" type="number" placeholder="Price">
+                    <div class="shop-list-inputs">
+                        <div class="shop-list-input">
+                            <input x-model="name" type="text" placeholder="Item name...">
+                        </div>
+                        <div class="shop-list-input isUrl">
+                            <input x-model="url" type="text" placeholder="Ref URL...">
+                        </div>
+                        <div class="shop-list-input isPrice">
+                            <input x-model="price" type="number" placeholder="Price">
+                        </div>
+                        <div class="shop-list-input isPrio">
+                            <select x-model="prio" placeholder="Priority">
+                                <template x-for="o in pMap">
+                                <option x-text="o.l" :value="o.i">
+                                </option>
+                                </template>
+                            </select>
+                        </div>
                     </div>
                     <div @click="onSubmit" class="shop-list-add">
                         ${ICONS.add}
