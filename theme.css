@@ -1685,7 +1685,7 @@ body.isCompactView .group-wechat {
   left: 0;
   top: 0;
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
   z-index: 9999999999999;
   background: black;
   display: flex;
