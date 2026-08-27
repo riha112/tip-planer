@@ -144,7 +144,6 @@
                 data = '<span data-map-location data-x="'+data.x+'" data-y="'+data.y+'"></span>';
             } else if (key === 'title') {
                 id = titlePrefix + (titleCounter++);
-                // console.debug([depth, data]);
                 this.menu.push({
                     id,
                     label: data,

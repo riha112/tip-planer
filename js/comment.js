@@ -182,7 +182,6 @@
                 const items =  this.comments[key].items;
 
                 if (!el) {
-                    console.debug([el, key]);
                     items.forEach((i) => {
                         i.pKey = key;
                         detachedComments.push(i)

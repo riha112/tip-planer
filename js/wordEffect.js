@@ -33,10 +33,16 @@
     window.wordEffect = {
         interval: false,
         isHovering: false,
+        lastWord: '',
+        getWord: function(words) {
+            let word = words[Math.floor(Math.random() * words.length)];
+            if (word == this.lastWord) word = this.getWord(words);
+            this.lastWord = word;
+            return word;
+        },
         run: function(DOM, words) {
             if (!this.isHovering) return;
-            const word = words[Math.floor(Math.random() * words.length)];
-            createWord(DOM, word);
+            createWord(DOM, this.getWord(words));
         },
         init: function(DOM, words) {
             if (!DOM || !words) return;
