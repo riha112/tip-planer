@@ -78,7 +78,7 @@
         },
         renderImg: function(data) {
             let style = data.style ? data.style : '';
-            return '<img fetchpriority="low" style="' + style + '" src="' + data.src + '"/>';
+            return '<img loading="lazy" fetchpriority="low" style="' + style + '" src="' + data.src + '"/>';
         },
         renderWeChat: function(data) {
             let label = data.label ? data.label : 'Show QR code';
