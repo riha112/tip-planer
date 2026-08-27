@@ -200,7 +200,7 @@ h1 {
 }
 
 .group {
-    padding: 16px;
+    padding: 16px 12px;
     background: #e9e9e947;
     display: flex;
     flex-direction: column;
@@ -337,7 +337,7 @@ h1 {
 
     &-item {
         position: relative;
-        padding: 12px;
+        padding: 12px 10px;
         display: flex;
         flex-direction: column;
         gap: 8px;

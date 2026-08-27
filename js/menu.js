@@ -61,6 +61,7 @@
                 window.onPlan(key);
                 item.querySelector('.newMenu-itemText').innerText = PLAN[key].title;
                 setMenuState(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
             }
         },
     };
