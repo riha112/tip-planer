@@ -2044,3 +2044,67 @@ body.isCompactView {
         }
     }
 }
+
+#hpdcanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#HBDY {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vw;
+    z-index: 9999999999999;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hpdcanvas {
+    &-text {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+        pointer-events: none;
+        animation: pop 0.7s ease-out;
+
+        h1 {
+            font-size: clamp(45px, 9vw, 120px);
+            font-weight: 900;
+            line-height: 1;
+            color: #ffd700;
+            text-shadow:
+                0 0 10px #fff,
+                0 0 30px #ff9900,
+                0 0 60px #ff00cc;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: clamp(16px, 3vw, 30px);
+            letter-spacing: 5px;
+        }
+    }
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
