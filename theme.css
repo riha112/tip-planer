@@ -1235,6 +1235,20 @@ template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .i
   flex: 1;
   padding: 8px 16px;
 }
+.shop-list-item-author {
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  background: #e4e7e3;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #9ca29e;
+  margin-left: 8px;
+  margin-right: -15px;
+}
 .shop-list-item-action {
   display: flex;
   padding: 2px;
@@ -1565,6 +1579,9 @@ body.isCompactView .group-wechat {
   }
   .shop-list-item > div:first-child {
     padding-top: 6px;
+  }
+  .shop-list-item-author {
+    display: none;
   }
   .shop-list-action {
     border-radius: 10px;

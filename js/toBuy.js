@@ -140,6 +140,10 @@
                 });
             },
             renderPrice: renderPrice,
+            getAuthIcon: function(i) {
+                if (i.a === 'Riha') return 'Ri';
+                return 'Di';
+            },
             getItems: function() {
                 if (window.toBuy && window.toBuy[this.uuid]) {
                     this.items = window.toBuy[this.uuid].items;
@@ -150,7 +154,10 @@
                         let aPrio = +(a.prio ? a.prio : PRIO_MAP[0].i);
                         let bPrio = +(b.prio ? b.prio : PRIO_MAP[0].i);
 
-                        if (aPrio === bPrio) return +a.id > +b.id;
+                        if (aPrio === bPrio) {
+                            if (a.a === b.a) return +a.id > +b.id;
+                            return a.a > b.a;
+                        };
                         return aPrio > bPrio;
                     });
                 } else {
@@ -203,7 +210,8 @@
                     price: this.price,
                     isBought: false,
                     uuidParent: this.uuidParent,
-                    prio: this.prio
+                    prio: this.prio,
+                    a: window.WHO
                 };
 
                 if (!this.uuid) return this.onClose();
@@ -232,6 +240,8 @@
                 <div class="shop-list-list">
                     <template x-for="item in items">
                         <div class="shop-list-item" :data-prio="item.prio ? item.prio : pMap[0].i" :class="{'isBought': item.isBought}">
+                            <div class="shop-list-item-author" x-html="getAuthIcon(item)">
+                            </div>
                             <div class="shop-list-item-content" x-html="item.content">
                             </div>
                             <template x-if="item.url">

@@ -1,0 +1,1 @@
+window.WHO = (/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent)) ? 'Didi' : 'Riha';
