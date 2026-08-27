@@ -51,11 +51,14 @@
             </div>
         </div>
         <div class="detached-comments" x-show="detachedComments && detachedComments.length > 0">
-            <h2>Detached comments</h2>
-            <div class="detached-comment-list">
+            <h2 class="detached-comments-title">Detached comments (<span x-text="detachedComments.length">0</span>)</h2>
+            <div class="detached-comments-list">
                 <template x-for="comment in detachedComments">
-                    <div class="detached-comment">
-                        <div class="detached-comment-message" x-text="comment.msg"></div>
+                    <div class="detached-comments-item">
+                        <div class="detached-comments-message" x-html="comment.msg"></div>
+                        <div @click="onDelete(comment)" class="detached-comments-delete comment-msg-delete">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                        </div>
                     </div>
                 </template>
             </div>
@@ -126,9 +129,24 @@
             return this.cache;
         },
         isDisabled: function(key) {
+            if (key === 'isCompactView') {
+                return this.configs.findIndex((k) => k.c !== 'isCompactView' && this.isDisabled(k.c)) >= 0;
+            }
             return !!this.getConfigs()[key];
         },
+        toggleAll: function() {
+            const isDisabled = this.isDisabled('isCompactView');
+            const c = this.getConfigs();
+            this.configs.forEach((k) => c[k.c] = !isDisabled);
+            localStorage.setItem('appConfig', JSON.stringify(c));
+            this.cache = c;
+            this.buildClasses();
+            console.debug([c]);
+        },
         toggle: function(key) {
+            if (key === 'isCompactView') {
+                return this.toggleAll();
+            }
             const c = this.getConfigs();
             c[key] = !c[key];
             localStorage.setItem('appConfig', JSON.stringify(c));

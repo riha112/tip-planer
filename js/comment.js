@@ -182,7 +182,11 @@
                 const items =  this.comments[key].items;
 
                 if (!el) {
-                    items.forEach((i) => detachedComments.push(i));
+                    console.debug([el, key]);
+                    items.forEach((i) => {
+                        i.pKey = key;
+                        detachedComments.push(i)
+                    });
                     return;
                 }
 
@@ -218,7 +222,11 @@
                 el.appendChild(domWrapper);
             });
 
-            window.setDetachedComments(detachedComments);
+            if (window.setDetachedComments) {
+                window.setDetachedComments(detachedComments);
+            } else {
+                window.detachedComments = detachedComments;
+            };
         }
     };
 
@@ -229,7 +237,15 @@
             isLoading: false,
             detachedComments: [],
             init: function() {
-                window.setDetachedComments = this.setDetachedComments();
+                if (window.detachedComments){
+                    this.setDetachedComments([...window.detachedComments]);
+                }
+                window.setDetachedComments = this.setDetachedComments.bind(this);
+
+                this.detachedComments.forEach((c) => {
+                    const d = rd(false, false, c.msg);
+                    c.msg = safeDOM(d).innerHTML;
+                });
             },
             setDetachedComments: function(comments) {
                 this.detachedComments = comments;
@@ -261,6 +277,11 @@
             },
             onClose: function() {
                 this.isHidden = true;
+            },
+            onDelete: function(c) {
+                if (c.type === 'local') localComments.delete(c.pKey, c.id);
+                else publicComments.delete(c.pKey, c.id);
+                commentManager.renderComments();
             },
             onBtnClose: function(e) {
                 if (e.target.id === "Comment") {

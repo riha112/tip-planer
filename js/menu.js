@@ -74,9 +74,6 @@
     
         filterItemDom.classList.toggle('isDisabled', isDisabled);
         filterItemDom.classList.remove('isActive');
-
-        configItemDom.classList.toggle('isDisabled', isDisabled);
-        configItemDom.classList.remove('isActive');
     };
 
     const disableAll = function() {

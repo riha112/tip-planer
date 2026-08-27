@@ -204,6 +204,8 @@
                 this.updateUrlParm('');
                 PIPE.invoke(EVENTS.onHome, []);
             }
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
         },
         readUrl: function() {
             const params = new URLSearchParams(window.location.search);
