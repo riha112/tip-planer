@@ -707,6 +707,7 @@ h1 {
   background: rgba(161, 161, 161, 0.2588235294);
   border-radius: 8px;
   position: relative;
+  color: #323232;
 }
 .comment-msg:first-child, .comment-msg:not(.myMsg) + .myMsg, .comment-msg.myMsg + :not(.myMsg) {
   margin-top: 20px;
