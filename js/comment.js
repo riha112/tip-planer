@@ -14,7 +14,7 @@
 
     const rd = function(c = false, p = false, iHtml = false) {
         const dd = document.createElement('div');
-        if (c) dd.classList.add(c);
+        if (c) dd.className = c;
         if (p) p.appendChild(dd);
         if (iHtml) dd.innerHTML = iHtml;
         return dd;
@@ -85,7 +85,6 @@
                 console.debug(e);
                 return {};
             }
-
             return this.cache;
         },
         save: async function(uid, comment) {
@@ -104,7 +103,8 @@
             const cData = {
                 msg: comment,
                 id: commentId,
-                type: 'public'
+                type: 'public',
+                a: window.WHO
             };
             comments[uid].items.push(cData);
             await this.saveNewData(comments);
@@ -140,7 +140,7 @@
     };
 
     const ALLOWED_ATTRIBUTES = ['id', 'class', 'href', 'target', 'src', 'alt', 'style'];
-    safeDOM = function(parent) {
+    const safeDOM = function(parent) {
         let nonAllowed = parent.querySelectorAll('script, style, link, input, button, form');
         nonAllowed.forEach((d) => d.remove());
 
@@ -205,7 +205,8 @@
                 let domWrapperList = rd('comments-msgs-list', domWrapper);
 
                 items.forEach((c) => {
-                    let commentDom = rd('comment-msg', domWrapperList);
+                    let commentDom = rd('comment-msg ' + (c.a === window.WHO ? 'myMsg' : ''), domWrapperList);
+                    commentDom.setAttribute('data-auth', c.a);
                     let commentMsgDom = rd('comment-msg-content', commentDom, c.msg);
                     safeDOM(commentMsgDom);
                     commentMsgDom.classList.add(c.type);
@@ -243,7 +244,8 @@
 
                 this.detachedComments.forEach((c) => {
                     const d = rd(false, false, c.msg);
-                    c.msg = safeDOM(d).innerHTML;
+                    safeDOM(d);
+                    c.msg = d.innerHTML;
                 });
             },
             setDetachedComments: function(comments) {

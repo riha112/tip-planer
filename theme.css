@@ -702,11 +702,58 @@ h1 {
   font-weight: normal;
   display: flex;
   flex-direction: row;
-  gap: 4px;
+  gap: 12px;
+  padding: 4px 8px;
+  background: rgba(161, 161, 161, 0.2588235294);
+  border-radius: 8px;
+  position: relative;
 }
-.comment-msg + .comment-msg {
-  border-top: 1px solid #cacaca;
-  padding-top: 6px;
+.comment-msg:first-child, .comment-msg:not(.myMsg) + .myMsg, .comment-msg.myMsg + :not(.myMsg) {
+  margin-top: 20px;
+}
+.comment-msg:first-child::before, .comment-msg:not(.myMsg) + .myMsg::before, .comment-msg.myMsg + :not(.myMsg)::before {
+  content: attr(data-auth);
+  display: block;
+  font-size: 10px;
+  position: absolute;
+  top: -17px;
+  opacity: 0.7;
+}
+.comment-msg::after {
+  display: block;
+  content: "";
+  top: 0;
+  position: absolute;
+  border-top: 15px solid rgba(161, 161, 161, 0.2588235294);
+}
+.comment-msg:not(.myMsg) {
+  margin-left: 15px;
+  border-top-left-radius: 0;
+  margin-right: auto;
+}
+.comment-msg:not(.myMsg)::after {
+  left: -15px;
+  border-left: 15px solid transparent;
+}
+.comment-msg:not(.myMsg) + :not(.myMsg)::after {
+  display: none;
+}
+.comment-msg.myMsg {
+  border-top-right-radius: 0;
+  margin-right: 15px;
+  background: rgba(79, 124, 255, 0.1882352941);
+  margin-left: auto;
+}
+.comment-msg.myMsg::before {
+  right: 0;
+}
+.comment-msg.myMsg::after {
+  right: -15px;
+  border-right: 15px solid transparent;
+  border-top-color: rgba(79, 124, 255, 0.1882352941);
+}
+.comment-msg.myMsg + .myMsg::after {
+  display: none;
 }
 .comment-msg p {
   margin: 0;

@@ -839,11 +839,73 @@ h1 {
     font-weight: normal;
     display: flex;
     flex-direction: row;
-    gap: 4px;
+    gap: 12px;
+    padding: 4px 8px;
+    background: #a1a1a142;
+    border-radius: 8px;
+    position: relative;
 
-    &+& {
-        border-top: 1px solid #cacaca;
-        padding-top: 6px;
+    &:first-child,
+    &:not(.myMsg) + .myMsg,
+    &.myMsg + :not(.myMsg) {
+        margin-top: 20px;
+        &::before {
+            content: attr(data-auth);
+            display: block;
+            font-size: 10px;
+            position: absolute;
+            top: -17px;
+            opacity: 0.7;
+        }
+    }
+
+    &::after {
+        display: block;
+        content: '';
+        top: 0;
+        position: absolute;
+
+        border-top: 15px solid #a1a1a142;
+    }
+
+    &:not(.myMsg) {
+        margin-left: 15px;
+        border-top-left-radius: 0;
+        margin-right: auto;
+
+        &::after {
+            left: -15px;
+            border-left: 15px solid transparent;
+        }
+
+        & + :not(.myMsg) {
+            &::after {
+                display: none;;
+            }
+        }
+    }
+    
+    &.myMsg {
+        border-top-right-radius: 0;
+        margin-right: 15px;
+        background: #4f7cff30;
+        margin-left: auto;
+
+        &::before {
+            right: 0;
+        }
+
+        &::after {
+            right: -15px;
+            border-right: 15px solid transparent;
+            border-top-color: #4f7cff30;
+        }
+
+        & + .myMsg {
+            &::after {
+                display: none;;
+            }
+        }
     }
 
     p {
