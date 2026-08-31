@@ -1784,7 +1784,7 @@ body.isCompactView .group-wechat {
   max-width: min(500px, 95vw);
   gap: 12px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
 }
 
 @keyframes msgLoading {
@@ -1793,6 +1793,17 @@ body.isCompactView .group-wechat {
   }
   100% {
     width: 100%;
+  }
+}
+@keyframes msgFadeout {
+  0% {
+    opacity: 100%;
+  }
+  90% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
   }
 }
 .message {
@@ -1808,6 +1819,7 @@ body.isCompactView .group-wechat {
   backdrop-filter: blur(6px);
   overflow: hidden;
   position: relative;
+  animation: msgFadeout 5s linear forwards;
 }
 .message.message-success {
   --msg-border: #758c4b;
