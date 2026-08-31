@@ -2171,3 +2171,78 @@ body.isCompactView {
         opacity: 1;
     }
 }
+
+.messages {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+    width: 100%;
+    max-width: min(500px, 95vw); 
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes msgLoading {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+.message {
+    --msg-border: #f38033;
+    --msg-base: #ffeedb8a;
+    display: flex;
+    gap: 10px;
+    background: var(--msg-base);
+    border-radius: 25px;
+    padding: 10px 15px;
+    box-shadow: 0 0 25px 0px rgba(59, 59, 59, 0.2117647059);
+    border: 1px solid var(--msg-border);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 50%;
+        height: 5px;
+        background: #66666647;
+        left: 0;
+        bottom: 0;
+        position: absolute;
+        animation: msgLoading 5s linear forwards;
+    }
+
+    &-icon {
+        svg {
+            fill: var(--msg-border);
+        }
+    }
+
+    &-title {
+        font-weight: bold;
+    }
+
+    &-text {
+        flex: 1;
+        color: #363636;
+    }
+
+    &-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;     
+        flex: 1;;   
+    }
+
+    &-button {
+        padding: 6px 15px;
+        background: var(--msg-border);
+        border-radius: 30px;
+        font-weight: 500;
+        color: white;
+        cursor: pointer;
+    }
+}

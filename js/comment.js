@@ -21,6 +21,7 @@
     };
 
     const LOC_CMNT_KEY = 'lCmtK';
+    const CACHE = 'CMN_CH';
 
     const localComments = {
         load: function() {
@@ -59,6 +60,42 @@
         }
     };
 
+    const getCommentDataMap = function(comments, ignoreUser = false) {
+        const dataMap = {};
+        Object.keys(comments).forEach((c) => {
+            comments[c].items.forEach((i) => {
+                if (!ignoreUser || ignoreUser !== i.a) {
+                    dataMap[c + '_' + i.id] = true;
+                }
+            });
+        });
+        return dataMap;
+    };
+
+    const showNotification = function(newComments, oldComments) {
+        const newCommentDataMap = getCommentDataMap(newComments, window.WHO);
+        const oldCommentDataMap = getCommentDataMap(oldComments, window.WHO);
+        let n = 0;
+        Object.keys(newCommentDataMap).forEach((i) => {
+            if (!oldCommentDataMap[i]) n++;
+        });
+        if (n > 0) {
+            window.addMessage(
+                'New Messages',
+                `You have <b>${n}</b> new comments from <b>${window.NWHO}</b>`
+            );
+        }
+    };
+
+    const getCacheComments = function() {
+        let cd = localStorage.getItem(CACHE);
+        if (cd) {
+            cd = JSON.parse(cd);
+            return cd;
+        }
+        return {};
+    };
+
     const BIN_ID = '6a762a84f5f4af5e29f8d5c8';
     const API = '$2a$10$5HXDXhg.59nAhDW8p45cu.0RhBu/Qh8Wx5GS47CrX5b0a3cT7C9ci';
     const publicComments = {
@@ -81,6 +118,11 @@
                 jsonData = await window.crypt.decrypt(jsonData, false, '', false);
                 if (!jsonData) return {};
                 this.cache = JSON.parse(jsonData);
+                showNotification(
+                    this.cache,
+                    getCacheComments()
+                );
+                localStorage.setItem(CACHE, jsonData);
             } catch (e){
                 console.debug(e);
                 return {};
