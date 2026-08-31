@@ -74,6 +74,11 @@
             toBuys[uid].items.push(cData);
             await this.saveNewData(toBuys);
             this.cache = false;
+            window.addMessage(
+                'Item Added',
+                'Item was added to shopping list successfully',
+                NOT_TYPE.success
+            );
         },
         saveNewData: async function (data) {
             if(!window.crypt.getKey()) return;
@@ -101,6 +106,11 @@
             toBuys[uid].items[idx] = toBuy;
             await this.saveNewData(toBuys);
             this.cache = false;
+            window.addMessage(
+                'Item Updated',
+                'Item was updated successfully',
+                NOT_TYPE.success
+            );
         },
         delete: async function(uid, toBuyId) {
             if(!window.crypt.getKey()) return;
@@ -112,6 +122,11 @@
             toBuys[uid].items.splice(i, 1);
             await this.saveNewData(toBuys);
             this.cache = false;
+            window.addMessage(
+                'Item Removed',
+                'Item was removed from shopping list successfully',
+                NOT_TYPE.success
+            );
         }
     };
 
