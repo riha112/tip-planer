@@ -2203,6 +2203,11 @@ body.isCompactView {
     overflow: hidden;
     position: relative;
 
+    &.message-success {
+        --msg-border: #758c4b;
+        --msg-base: #e9ffdb8a;
+    }
+
     &::after {
         content: '';
         display: block;

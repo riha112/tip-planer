@@ -1809,6 +1809,10 @@ body.isCompactView .group-wechat {
   overflow: hidden;
   position: relative;
 }
+.message.message-success {
+  --msg-border: #758c4b;
+  --msg-base: #e9ffdb8a;
+}
 .message::after {
   content: "";
   display: block;

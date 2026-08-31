@@ -48,6 +48,12 @@
 
             localStorage.setItem(LOC_CMNT_KEY, JSON.stringify(comments));
 
+            window.addMessage(
+                'Comment Added',
+                'Comment was added successfully',
+                NOT_TYPE.success
+            );
+
             return cData;
         },
         delete: function(uid, commentId) {
@@ -57,6 +63,11 @@
             if (i < 0) return;
             comments[uid].items.splice(i, 1);
             localStorage.setItem(LOC_CMNT_KEY, JSON.stringify(comments));
+            window.addMessage(
+                'Comment Deleted',
+                'Comment was deleted successfully',
+                NOT_TYPE.success
+            );
         }
     };
 
@@ -151,6 +162,11 @@
             comments[uid].items.push(cData);
             await this.saveNewData(comments);
             this.cache = false;
+            window.addMessage(
+                'Comment Added',
+                'Comment was added successfully',
+                NOT_TYPE.success
+            );
         },
         saveNewData: async function (data) {
             if(!window.crypt.getKey()) return;
@@ -178,6 +194,11 @@
             comments[uid].items.splice(i, 1);
             await this.saveNewData(comments);
             this.cache = false;
+            window.addMessage(
+                'Comment Deleted',
+                'Comment was deleted successfully',
+                NOT_TYPE.success
+            );
         }
     };
 

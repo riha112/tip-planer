@@ -1,6 +1,7 @@
 const NOT_TYPE = {
     info: 'info',
     error: 'error',
+    success: 'success',
 };
 
 (function() {
