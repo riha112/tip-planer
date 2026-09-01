@@ -1819,7 +1819,7 @@ body.isCompactView .group-wechat {
   backdrop-filter: blur(6px);
   overflow: hidden;
   position: relative;
-  animation: msgFadeout 5s linear forwards;
+  animation: msgFadeout 7s linear forwards;
 }
 .message.message-success {
   --msg-border: #758c4b;
@@ -1834,7 +1834,7 @@ body.isCompactView .group-wechat {
   left: 0;
   bottom: 0;
   position: absolute;
-  animation: msgLoading 5s linear forwards;
+  animation: msgLoading 7s linear forwards;
 }
 .message-icon svg {
   fill: var(--msg-border);
@@ -1851,6 +1851,10 @@ body.isCompactView .group-wechat {
   align-items: center;
   gap: 12px;
   flex: 1;
+}
+.message-body * {
+  padding: 0;
+  margin: 0;
 }
 .message-button {
   padding: 6px 15px;

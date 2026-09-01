@@ -5,7 +5,7 @@ const NOT_TYPE = {
 };
 
 (function() {
-    const LIFE_SPAN = 5;
+    const LIFE_SPAN = 8;
 
     window.initNotifications = {
         uuid: 0,

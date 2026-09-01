@@ -2208,7 +2208,7 @@ body.isCompactView {
     backdrop-filter: blur(6px);
     overflow: hidden;
     position: relative;
-    animation: msgFadeout 5s linear forwards;
+    animation: msgFadeout 7s linear forwards;
 
     &.message-success {
         --msg-border: #758c4b;
@@ -2224,7 +2224,7 @@ body.isCompactView {
         left: 0;
         bottom: 0;
         position: absolute;
-        animation: msgLoading 5s linear forwards;
+        animation: msgLoading 7s linear forwards;
     }
 
     &-icon {
@@ -2246,7 +2246,14 @@ body.isCompactView {
         display: flex;
         align-items: center;
         gap: 12px;     
-        flex: 1;;   
+        flex: 1; 
+    }
+
+    &-body {
+        * {
+            padding: 0;
+            margin: 0;
+        }
     }
 
     &-button {

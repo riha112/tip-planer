@@ -87,14 +87,43 @@
         const newCommentDataMap = getCommentDataMap(newComments, window.WHO);
         const oldCommentDataMap = getCommentDataMap(oldComments, window.WHO);
         let n = 0;
+        let msgs  =[];
+        const ignoreMap = {
+            "440980227_2": true,
+            "557532932_2": true,
+            "557532932_3": true,
+            "1127098353_1": true,
+            "2558398236_1": true,
+            "3395507931_1": true,
+            "3505186884_1": true,
+            "3505186884_2": true,
+            "3992952498_1": true,
+        };
         Object.keys(newCommentDataMap).forEach((i) => {
-            if (!oldCommentDataMap[i]) n++;
+            if (!oldCommentDataMap[i] && !ignoreMap[i]) {
+                n++;
+                let dd = i.split('_');
+                if (newComments[dd[0]].items) {
+                    const msgIdx = newComments[dd[0]].items.findIndex((ii) => +ii.id === +dd[1]);
+                    if (msgIdx >= 0) {
+                        var d = document.createElement('div');
+                        d.innerHTML = newComments[dd[0]].items[msgIdx].msg;
+                        safeDOM(d);
+                        msgs.push(d.innerHTML);
+                    }
+                }
+            }
         });
+
         if (n > 0) {
             window.addMessage(
                 'New Messages',
                 `You have <b>${n}</b> new comments from <b>${window.NWHO}</b>`
             );
+
+            msgs.forEach((m) => {
+                window.addMessage('New Message', m);
+            });
         }
     };
 
