@@ -305,6 +305,10 @@
             if (window.initToBuy) {
                 window.initToBuy();
             }
+
+            if (window.initToDo) {
+                window.initToDo();
+            }
         }
     };
 

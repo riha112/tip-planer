@@ -4,6 +4,7 @@ const EVENTS = {
     onHome: 'onHome',
     onMenuLoaded: 'onMenuLoaded',
     onToBuyUpdate: 'onToBuyUpdate',
+    onToDoUpdate: 'onToDoUpdate',
 };
 
 const PIPE = {

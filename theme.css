@@ -1138,7 +1138,8 @@ body:not(.comment-mode-active) .detached-comments {
   fill: #ce528d;
 }
 
-.shop-list-loader {
+.shop-list-loader,
+.todo-loader {
   position: absolute;
   left: 0;
   top: 0;
@@ -1151,35 +1152,43 @@ body:not(.comment-mode-active) .detached-comments {
   z-index: 2;
   border-radius: 16px;
 }
-.shop-list-spinner svg {
+.shop-list-spinner svg,
+.todo-spinner svg {
   animation: rotate 2s linear infinite;
   fill: black;
   height: 40px;
 }
-.shop-list-notice {
+.shop-list-notice,
+.todo-notice {
   font-size: 12px;
   position: absolute;
   bottom: -24px;
   right: 0;
   opacity: 0.8;
 }
-.shop-list-form {
+.shop-list-form,
+.todo-form {
+  --list-accent-color: #a5bd7b;
   background: linear-gradient(321deg, rgba(255, 255, 255, 0.7) 0%, rgba(235, 235, 235, 0.7) 100%);
   border-radius: 16px;
   padding: 20px;
-  border: 4px solid #a5bd7b;
+  border: 4px solid var(--list-accent-color);
   position: relative;
   margin-top: 8px;
   margin-bottom: 20px;
 }
-.shop-list-form.isClosed {
+.shop-list-form.isClosed,
+.todo-form.isClosed {
   padding: 2px;
   min-height: 34px;
 }
-.shop-list-form.isClosed .shop-list-list, .shop-list-form.isClosed .shop-list-action {
+.shop-list-form.isClosed .shop-list-list, .shop-list-form.isClosed .shop-list-action,
+.todo-form.isClosed .shop-list-list,
+.todo-form.isClosed .shop-list-action {
   display: none;
 }
-.shop-list-form.isClosed .shop-list-title {
+.shop-list-form.isClosed .shop-list-title,
+.todo-form.isClosed .shop-list-title {
   left: 0;
   top: 0;
   width: 100%;
@@ -1188,12 +1197,14 @@ body:not(.comment-mode-active) .detached-comments {
   justify-content: start;
   cursor: pointer;
 }
-.shop-list-form.isClosed .shop-list-total {
+.shop-list-form.isClosed .shop-list-total,
+.todo-form.isClosed .shop-list-total {
   margin: 0;
   z-index: 1;
   position: relative;
 }
-.shop-list-title {
+.shop-list-title,
+.todo-title {
   font-weight: bold;
   display: flex;
   gap: 4px;
@@ -1204,17 +1215,19 @@ body:not(.comment-mode-active) .detached-comments {
   left: -4px;
   padding: 4px 10px;
   border-bottom-right-radius: 13px;
-  background: #a5bd7b;
+  background: var(--list-accent-color);
   color: white;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-.shop-list-title svg {
+.shop-list-title svg,
+.todo-title svg {
   fill: white;
   height: 22px;
 }
-.shop-list-list {
+.shop-list-list,
+.todo-list {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -1223,7 +1236,8 @@ body:not(.comment-mode-active) .detached-comments {
   overflow: hidden;
   margin-top: 20px;
 }
-.shop-list-item {
+.shop-list-item,
+.todo-item {
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -1231,24 +1245,55 @@ body:not(.comment-mode-active) .detached-comments {
   filter: grayscale(0);
   transition: filter 0.25s ease;
 }
-.shop-list-item:nth-child(odd) {
+.shop-list-item:nth-child(odd),
+.todo-item:nth-child(odd) {
   background: rgba(101, 128, 87, 0.1098039216);
 }
-.shop-list-item.isBought {
+.shop-list-item.isBought, .shop-list-item.isDone,
+.todo-item.isBought,
+.todo-item.isDone {
   filter: grayscale(0.8);
   text-decoration: line-through;
 }
-.shop-list-item[data-prio="1"] + [data-prio="1"], .shop-list-item[data-prio="5"] + [data-prio="5"], .shop-list-item[data-prio="10"] + [data-prio="10"], .shop-list-item[data-prio="15"] + [data-prio="15"], .shop-list-item[data-prio="20"] + [data-prio="20"] {
+.shop-list-item[data-prio="1"] + [data-prio="1"], .shop-list-item[data-prio="5"] + [data-prio="5"], .shop-list-item[data-prio="10"] + [data-prio="10"], .shop-list-item[data-prio="15"] + [data-prio="15"], .shop-list-item[data-prio="20"] + [data-prio="20"],
+.todo-item[data-prio="1"] + [data-prio="1"],
+.todo-item[data-prio="5"] + [data-prio="5"],
+.todo-item[data-prio="10"] + [data-prio="10"],
+.todo-item[data-prio="15"] + [data-prio="15"],
+.todo-item[data-prio="20"] + [data-prio="20"] {
   padding-top: 0;
 }
-.shop-list-item[data-prio="1"] + [data-prio="1"]::before, .shop-list-item[data-prio="5"] + [data-prio="5"]::before, .shop-list-item[data-prio="10"] + [data-prio="10"]::before, .shop-list-item[data-prio="15"] + [data-prio="15"]::before, .shop-list-item[data-prio="20"] + [data-prio="20"]::before {
+.shop-list-item[data-prio="1"] + [data-prio="1"]::before, .shop-list-item[data-prio="5"] + [data-prio="5"]::before, .shop-list-item[data-prio="10"] + [data-prio="10"]::before, .shop-list-item[data-prio="15"] + [data-prio="15"]::before, .shop-list-item[data-prio="20"] + [data-prio="20"]::before,
+.todo-item[data-prio="1"] + [data-prio="1"]::before,
+.todo-item[data-prio="5"] + [data-prio="5"]::before,
+.todo-item[data-prio="10"] + [data-prio="10"]::before,
+.todo-item[data-prio="15"] + [data-prio="15"]::before,
+.todo-item[data-prio="20"] + [data-prio="20"]::before {
   display: none;
 }
-template + .shop-list-item.isBought, .shop-list-item:not(.isBought) + .isBought, .shop-list-item[data-prio="1"], .shop-list-item[data-prio="5"], .shop-list-item[data-prio="10"], .shop-list-item[data-prio="15"], .shop-list-item[data-prio="20"] {
+template + .shop-list-item.isBought, .shop-list-item:not(.isBought) + .isBought, template + .shop-list-item.isDone, .shop-list-item:not(.isDone) + .isDone, .shop-list-item[data-prio="1"], .shop-list-item[data-prio="5"], .shop-list-item[data-prio="10"], .shop-list-item[data-prio="15"], .shop-list-item[data-prio="20"],
+template + .todo-item.isBought,
+.todo-item:not(.isBought) + .isBought,
+template + .todo-item.isDone,
+.todo-item:not(.isDone) + .isDone,
+.todo-item[data-prio="1"],
+.todo-item[data-prio="5"],
+.todo-item[data-prio="10"],
+.todo-item[data-prio="15"],
+.todo-item[data-prio="20"] {
   padding-top: 25px;
   position: relative;
 }
-template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .isBought::before, .shop-list-item[data-prio="1"]::before, .shop-list-item[data-prio="5"]::before, .shop-list-item[data-prio="10"]::before, .shop-list-item[data-prio="15"]::before, .shop-list-item[data-prio="20"]::before {
+template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .isBought::before, template + .shop-list-item.isDone::before, .shop-list-item:not(.isDone) + .isDone::before, .shop-list-item[data-prio="1"]::before, .shop-list-item[data-prio="5"]::before, .shop-list-item[data-prio="10"]::before, .shop-list-item[data-prio="15"]::before, .shop-list-item[data-prio="20"]::before,
+template + .todo-item.isBought::before,
+.todo-item:not(.isBought) + .isBought::before,
+template + .todo-item.isDone::before,
+.todo-item:not(.isDone) + .isDone::before,
+.todo-item[data-prio="1"]::before,
+.todo-item[data-prio="5"]::before,
+.todo-item[data-prio="10"]::before,
+.todo-item[data-prio="15"]::before,
+.todo-item[data-prio="20"]::before {
   content: "Bought";
   display: block;
   position: absolute;
@@ -1263,27 +1308,38 @@ template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .i
   text-align: center;
   color: black;
 }
-.shop-list-item[data-prio="1"]::before, .shop-list-item[data-prio="5"]::before, .shop-list-item[data-prio="10"]::before, .shop-list-item[data-prio="15"]::before, .shop-list-item[data-prio="20"]::before {
+.shop-list-item[data-prio="1"]::before, .shop-list-item[data-prio="5"]::before, .shop-list-item[data-prio="10"]::before, .shop-list-item[data-prio="15"]::before, .shop-list-item[data-prio="20"]::before,
+.todo-item[data-prio="1"]::before,
+.todo-item[data-prio="5"]::before,
+.todo-item[data-prio="10"]::before,
+.todo-item[data-prio="15"]::before,
+.todo-item[data-prio="20"]::before {
   background: #e4e7e3;
   border-bottom: 1px solid #c7cdc9;
 }
-.shop-list-item[data-prio="1"]::before {
+.shop-list-item[data-prio="1"]::before,
+.todo-item[data-prio="1"]::before {
   content: "Important";
 }
-.shop-list-item[data-prio="5"]::before {
+.shop-list-item[data-prio="5"]::before,
+.todo-item[data-prio="5"]::before {
   content: "Would be great";
 }
-.shop-list-item[data-prio="10"]::before {
+.shop-list-item[data-prio="10"]::before,
+.todo-item[data-prio="10"]::before {
   content: "Thinking";
 }
-.shop-list-item[data-prio="15"]::before {
+.shop-list-item[data-prio="15"]::before,
+.todo-item[data-prio="15"]::before {
   content: "Low priority";
 }
-.shop-list-item-content {
+.shop-list-item-content,
+.todo-item-content {
   flex: 1;
   padding: 8px 16px;
 }
-.shop-list-item-author {
+.shop-list-item-author,
+.todo-item-author {
   border-radius: 50%;
   aspect-ratio: 1/1;
   background: #e4e7e3;
@@ -1297,7 +1353,8 @@ template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .i
   margin-left: 8px;
   margin-right: -15px;
 }
-.shop-list-item-action {
+.shop-list-item-action,
+.todo-item-action {
   display: flex;
   padding: 2px;
   align-items: center;
@@ -1306,52 +1363,65 @@ template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .i
   aspect-ratio: 1/1;
   border-radius: 30px;
 }
-.shop-list-item-action svg {
+.shop-list-item-action svg,
+.todo-item-action svg {
   height: 16px;
 }
-.shop-list-item-actions {
+.shop-list-item-actions,
+.todo-item-actions {
   display: flex;
   flex-direction: row;
   gap: 4px;
   padding: 10px;
 }
-.shop-list-item-link {
+.shop-list-item-link,
+.todo-item-link {
   display: flex;
   align-items: center;
   margin-right: 12px;
   color: #6d8286;
   font-weight: bold;
 }
-.shop-list-item-link svg {
+.shop-list-item-link svg,
+.todo-item-link svg {
   height: 16px;
   fill: #6d8286;
 }
-.shop-list-item-price {
+.shop-list-item-price,
+.todo-item-price {
   font-weight: bold;
   color: #708d3c;
 }
-.shop-list-item-remove {
+.shop-list-item-remove,
+.todo-item-remove {
   background: #ce528d;
 }
-.shop-list-item-remove svg {
+.shop-list-item-remove svg,
+.todo-item-remove svg {
   fill: white;
 }
-.shop-list-item-toggle {
+.shop-list-item-toggle,
+.todo-item-toggle {
   background: #3a8e9b;
 }
-.shop-list-item-toggle svg {
+.shop-list-item-toggle svg,
+.todo-item-toggle svg {
   fill: white;
 }
-.shop-list-inputs {
+.shop-list-inputs,
+.todo-inputs {
   display: flex;
   flex-direction: row;
   gap: 8px;
   flex: 1;
 }
-.shop-list-input {
+.shop-list-input,
+.todo-input {
   flex: 1;
 }
-.shop-list-input input, .shop-list-input select {
+.shop-list-input input, .shop-list-input select,
+.todo-input input,
+.todo-input select {
   padding: 12px 20px;
   border-radius: 30px;
   border: none;
@@ -1364,19 +1434,24 @@ template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .i
   background: white;
   text-overflow: ellipsis;
 }
-.shop-list-input select {
+.shop-list-input select,
+.todo-input select {
   background: #a5c0e1;
   -webkit-appearance: none;
   -moz-appearance: none;
   cursor: pointer;
 }
-.shop-list-input.isPrice {
+.shop-list-input.isPrice,
+.todo-input.isPrice {
   max-width: 90px;
 }
-.shop-list-input.isUrl, .shop-list-input.isPrio {
+.shop-list-input.isUrl, .shop-list-input.isPrio,
+.todo-input.isUrl,
+.todo-input.isPrio {
   max-width: 140px;
 }
-.shop-list-action {
+.shop-list-action,
+.todo-action {
   margin-top: 16px;
   display: flex;
   gap: 16px;
@@ -1385,9 +1460,10 @@ template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .i
   background: #e4e6e4;
   border-radius: 30px;
 }
-.shop-list-add {
+.shop-list-add,
+.todo-add {
   border-radius: 100px;
-  background: #a5bd7b;
+  background: var(--list-accent-color);
   aspect-ratio: 1/1;
   padding: 10px;
   display: flex;
@@ -1395,13 +1471,16 @@ template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .i
   justify-content: center;
   cursor: pointer;
 }
-.shop-list-add svg {
+.shop-list-add svg,
+.todo-add svg {
   fill: white;
 }
-.shop-list-summary {
+.shop-list-summary,
+.todo-summary {
   text-align: right;
 }
-.shop-list-total {
+.shop-list-total,
+.todo-total {
   font-weight: bold;
   margin-top: 12px;
   background: #e4e7e3;
@@ -1409,6 +1488,24 @@ template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .i
   border-radius: 10px;
   color: #697750;
   display: inline-block;
+}
+
+.todo-form {
+  --list-accent-color: #679bc1;
+  border: none;
+  background: #ececec;
+  padding: 20px 10px 10px 10px;
+}
+.todo-title {
+  top: 0;
+  left: 0;
+}
+.todo-action {
+  background: transparent;
+  padding: 0;
+}
+template + .todo-item.isDone::before, .todo-item:not(.isDone) + .isDone::before {
+  content: "Done";
 }
 
 .config-item {
@@ -1467,13 +1564,18 @@ body.hideShoppingCart .shop-list-form {
   display: none !important;
 }
 
+body.hideTodo .todo-form {
+  display: none !important;
+}
+
 body.hideWeChat .group-wechat {
   display: none !important;
 }
 
 body.isCompactView .group-gallery,
 body.isCompactView .shop-list-form,
-body.isCompactView .group-wechat {
+body.isCompactView .group-wechat,
+body.isCompactView .todo-form {
   display: none !important;
 }
 
@@ -1614,32 +1716,40 @@ body.isCompactView .group-wechat {
   .newMenu-menuWrapperInner {
     padding: 12px;
   }
-  .shop-list-form {
+  .shop-list-form,
+  .todo-form {
     padding: 15px 10px 10px 10px;
   }
-  .shop-list-item {
+  .shop-list-item,
+  .todo-item {
     flex-direction: column;
     gap: 6px;
     padding: 6px;
   }
-  .shop-list-item > div {
+  .shop-list-item > div,
+  .todo-item > div {
     padding: 0;
   }
-  .shop-list-item > div:first-child {
+  .shop-list-item > div:first-child,
+  .todo-item > div:first-child {
     padding-top: 6px;
   }
-  .shop-list-item-author {
+  .shop-list-item-author,
+  .todo-item-author {
     display: none;
   }
-  .shop-list-action {
+  .shop-list-action,
+  .todo-action {
     border-radius: 10px;
     flex-direction: column;
   }
-  .shop-list-total {
+  .shop-list-total,
+  .todo-total {
     width: 100%;
     text-align: center;
   }
-  .shop-list-add {
+  .shop-list-add,
+  .todo-add {
     width: 100%;
     aspect-ratio: unset;
     gap: 8px;
@@ -1647,10 +1757,12 @@ body.isCompactView .group-wechat {
     color: white;
     align-items: center;
   }
-  .shop-list-inputs {
+  .shop-list-inputs,
+  .todo-inputs {
     flex-direction: column;
   }
-  .shop-list-inputs .shop-list-input {
+  .shop-list-inputs .shop-list-input,
+  .todo-inputs .shop-list-input {
     max-width: 100%;
     width: 100%;
   }
