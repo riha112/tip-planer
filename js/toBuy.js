@@ -333,7 +333,7 @@
         });
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    const initTotals = function() {
         const sections = document.querySelectorAll('.area-main>.group.gDefault');
         sections.forEach((section) => {
             const totalDom = document.createElement('div');
@@ -349,11 +349,12 @@
                 totalDom.innerHTML = 'Total amount for shopping: <b>' + renderPrice(total) + " €</b>";
             });
         });
-    });
+    };
 
     window.initToBuy = async function() {
         initShopList();
         window.toBuy = await publicToBuys.load();
+        initTotals();
         PIPE.invoke(EVENTS.onToBuyUpdate);
     }
 })();
