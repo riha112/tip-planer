@@ -179,6 +179,14 @@
                     this.items = [];
                 }
             },
+            getLeftPrice: function() {
+                let left = 0;
+                this.items.forEach((i) => {
+                    if (!i.isBought) left += (+this.renderPrice(i.price));
+                });
+
+                return left;
+            },
             getTotal: function() {
                 let total = 0, left = 0, amount = 0;
                 this.items.forEach((i) => {
@@ -282,7 +290,7 @@
                 </template>
                 <template x-if="items && items.length">
                 <div class="shop-list-summary">
-                    <div class="shop-list-total" x-html="getTotal()">
+                    <div class="shop-list-total" :data-leftPrice="getLeftPrice()" x-html="getTotal()">
                     </div>
                 </div>
                 </template>
@@ -324,6 +332,24 @@
             wrapper.setAttribute(':class', '{"isClosed": !isOpen}');
         });
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll('.area-main>.group.gDefault');
+        sections.forEach((section) => {
+            const totalDom = document.createElement('div');
+            section.append(totalDom);
+            totalDom.className = "total-toBuy-section";
+            PIPE.subscribe(EVENTS.onToBuyUpdate, () => {
+                const prices = section.querySelectorAll('[data-leftprice]');
+                let total = 0;
+                [...prices].forEach((p) => {
+                    const pp = p.getAttribute('data-leftprice');
+                    total += (+pp);
+                });
+                totalDom.innerHTML = 'Total amount for shopping: <b>' + renderPrice(total) + " €</b>";
+            });
+        });
+    });
 
     window.initToBuy = async function() {
         initShopList();

@@ -46,7 +46,17 @@ h1 {
   gap: 20px;
   max-width: 100vw;
   padding: 12px;
-  padding-bottom: 65px;
+  padding-bottom: 125px;
+}
+
+.total-toBuy-section:has(b) {
+  text-align: center;
+  padding: 10px;
+  background: #a5bd7b;
+  border-radius: 30px;
+  color: #262f13;
+  margin-inline: auto;
+  padding-inline: 30px;
 }
 
 #Plans,
@@ -1819,7 +1829,7 @@ body.isCompactView #ball {
   }
   .plan-item.isVisible {
     padding: 4px;
-    padding-bottom: 70px;
+    padding-bottom: 90px;
   }
 }
 .detached-comments {
