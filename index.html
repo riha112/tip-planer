@@ -108,8 +108,15 @@
             {l: 'Show WeChat', c: 'hideWeChat'},
             {l: 'Show Todo', c: 'hideTodo'},
             {l: 'Full View', c: 'isCompactView'},
+            {l: 'Hide Stress Ball', c: 'hideStressBall'},
         ],
         cache: false,
+        init: function() {
+            const c = this.getConfigs();
+            this.configs.forEach((k) => {
+                PIPE.invoke(EVENTS.onConfigUpdate, [k.c, c[k.c]]);
+            });
+        },
         getConfigs: function() {
             if (this.cache) return this.cache;
             this.cache = localStorage.getItem('appConfig');
@@ -119,18 +126,21 @@
         },
         isDisabled: function(key) {
             if (key === 'isCompactView') {
-                return this.configs.findIndex((k) => k.c !== 'isCompactView' && this.isDisabled(k.c)) >= 0;
+                return this.configs.findIndex((k) => k.c !== 'isCompactView' && k.c !== 'hideStressBall' && this.isDisabled(k.c)) >= 0;
             }
             return !!this.getConfigs()[key];
         },
         toggleAll: function() {
             const isDisabled = this.isDisabled('isCompactView');
             const c = this.getConfigs();
-            this.configs.forEach((k) => c[k.c] = !isDisabled);
+            this.configs.forEach((k) => {
+                if (k.c === 'hideStressBall') return;
+                c[k.c] = !isDisabled;
+                PIPE.invoke(EVENTS.onConfigUpdate, [k.c, !isDisabled]);
+            });
             localStorage.setItem('appConfig', JSON.stringify(c));
             this.cache = c;
             this.buildClasses();
-            console.debug([c]);
         },
         toggle: function(key) {
             if (key === 'isCompactView') {
@@ -141,6 +151,7 @@
             localStorage.setItem('appConfig', JSON.stringify(c));
             this.cache = c;
             this.buildClasses();
+            PIPE.invoke(EVENTS.onConfigUpdate, [key, c[key]]);
         },
         buildClasses: function() {
             const c = this.getConfigs();
@@ -185,8 +196,11 @@
         </template>
     </div>
 
-    <script src="./js/yuki.js"></script>
+    <div id="scene">
+        <div id="ball"></div>
+    </div>
 
+    <!-- <script src="./js/yuki.js"></script> -->
     <!-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> -->
     <script src="./js/crypt.js"></script>
     <script src="./js/hash.js"></script>
@@ -194,6 +208,8 @@
     <script src="./js/notifications.js"></script>
 
     <script src="./js/pipe.js"></script>
+    <script src="./js/stressball.js"></script>
+
     <script src="./js/wordEffect.js"></script>
     <script src="./js/filters.js"></script>
     <script src="./js/toBuy.js"></script>

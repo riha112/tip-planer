@@ -5,6 +5,8 @@ const EVENTS = {
     onMenuLoaded: 'onMenuLoaded',
     onToBuyUpdate: 'onToBuyUpdate',
     onToDoUpdate: 'onToDoUpdate',
+    onToggleStressBall: 'onToggleStressBalls',
+    onConfigUpdate: 'onConfigUpdate'
 };
 
 const PIPE = {

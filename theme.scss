@@ -1734,8 +1734,33 @@ body:not(.comment-mode-active) {
     align-items: center;
     gap: 12px;
     padding: 12px;
+    position: relative;
+
+    &:nth-child(2),
+    &:last-child {
+        margin-top: 10px;
+
+        &::before {
+            content: 'Display';
+            position: absolute;
+            left: 12px;
+            top: -10px;
+            font-weight: bold;
+            display: block;
+            font-size: 9px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+    }
 
     &:last-child {
+        margin-top: 25px;
+        &::before {
+            content: 'Fun';
+        }
+    }
+
+    &:nth-last-child(2) {
         border-top: 1px solid #8080804d;
     }
 
@@ -1788,6 +1813,12 @@ body:not(.comment-mode-active) {
     }
 }
 
+body:not(.hideStressBall) {
+    #ball {
+        display: none !important;
+    }
+}
+
 body.hideGallery {
     .group-gallery {
         display: none !important;
@@ -1816,7 +1847,8 @@ body.isCompactView {
     .group-gallery,
     .shop-list-form,
     .group-wechat,
-    .todo-form {
+    .todo-form,
+    #ball {
         display: none !important;
     }
 }
@@ -2302,3 +2334,46 @@ body.isCompactView {
         cursor: pointer;
     }
 }
+
+
+  #scene {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  #ball {
+    pointer-events: all;
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    cursor: grab;
+    background:
+      radial-gradient(circle at 35% 30%, #ff9f7a 0%, #ff5f6d 35%, #d6304a 70%, #a8203a 100%);
+    box-shadow:
+      inset -8px -12px 25px rgba(0,0,0,0.35),
+      inset 6px 8px 20px rgba(255,255,255,0.25),
+      0 10px 20px rgba(0,0,0,0.4);
+    will-change: transform;
+  }
+
+  #ball:active {
+    cursor: grabbing;
+  }
+
+  #ball::after {
+    content: "";
+    position: absolute;
+    top: 18%;
+    left: 22%;
+    width: 30%;
+    height: 20%;
+    background: rgba(255,255,255,0.55);
+    border-radius: 50%;
+    filter: blur(4px);
+  }
