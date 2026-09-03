@@ -102,6 +102,7 @@ let isEnabled = false;
     }
   }
 
+  ball.style.touchAction = 'none';
   ball.addEventListener('pointerdown', pointerDown);
   window.addEventListener('pointermove', pointerMove);
   window.addEventListener('pointerup', pointerUp);
@@ -121,29 +122,37 @@ function checkBodyScrollPosition() {
   return isAtTop || isAtBottom;
 };
 
-  window.addEventListener('wheel', (e) => {
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
     if (!isEnabled) return;
+
+    const currentScrollY = window.scrollY;
+    const deltaY = currentScrollY - lastScrollY;
+    lastScrollY = currentScrollY;
 
     if (checkBodyScrollPosition()) {
         return;
     }
-    // scroll down (deltaY > 0) -> force up (negative vy)
-    // scroll up (deltaY < 0) -> force down (positive vy)
-    const impulse = -e.deltaY * SCROLL_FORCE;
+
+    // Body scroll down -> force up
+    // Body scroll up   -> force down
+    const impulse = -deltaY * SCROLL_FORCE;
     vy += impulse;
 
-    // small squish reaction so the force feels tangible
+    // Small squish reaction so the force feels tangible
     const factor = Math.min(Math.abs(impulse) / 900, 0.35);
+
     if (impulse < 0) {
-      // being pushed up: stretch vertically
-      squishTargetY = 1 + factor;
-      squishTargetX = 1 - factor * 0.6;
-    } else {
-      // being pushed down: squash
-      squishTargetY = 1 - factor * 0.6;
-      squishTargetX = 1 + factor;
+        // Being pushed up: stretch vertically
+        squishTargetY = 1 + factor;
+        squishTargetX = 1 - factor * 0.6;
+    } else if (impulse > 0) {
+        // Being pushed down: squash
+        squishTargetY = 1 - factor * 0.6;
+        squishTargetX = 1 + factor;
     }
-  }, { passive: false });
+    }, { passive: true });
 
   let prevTime = performance.now();
 
