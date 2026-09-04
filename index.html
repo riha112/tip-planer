@@ -119,6 +119,7 @@
             {l: 'Show Todo', c: 'hideTodo'},
             {l: 'Full View', c: 'isCompactView'},
             {l: 'Hide Stress Ball', c: 'hideStressBall'},
+            {l: 'Light mode', c: 'dark'},
         ],
         cache: false,
         init: function() {
@@ -136,7 +137,7 @@
         },
         isDisabled: function(key) {
             if (key === 'isCompactView') {
-                return this.configs.findIndex((k) => k.c !== 'isCompactView' && k.c !== 'hideStressBall' && this.isDisabled(k.c)) >= 0;
+                return this.configs.findIndex((k) => k.c !== 'isCompactView' && k.c !== 'hideStressBall' && k.c !== 'dark' && this.isDisabled(k.c)) >= 0;
             }
             return !!this.getConfigs()[key];
         },
@@ -145,6 +146,8 @@
             const c = this.getConfigs();
             this.configs.forEach((k) => {
                 if (k.c === 'hideStressBall') return;
+                if (k.c === 'dark') return;
+
                 c[k.c] = !isDisabled;
                 PIPE.invoke(EVENTS.onConfigUpdate, [k.c, !isDisabled]);
             });
