@@ -179,13 +179,9 @@
                     this.items = [];
                 }
             },
-            getLeftPrice: function() {
-                let left = 0;
-                this.items.forEach((i) => {
-                    if (!i.isBought) left += (+this.renderPrice(i.price));
-                });
-
-                return left;
+            getLeftPrice: function(i) {
+                if (!i.isBought) return (+this.renderPrice(i.price));
+                return 0;
             },
             getTotal: function() {
                 let total = 0, left = 0, amount = 0;
@@ -273,7 +269,7 @@
                             </a>
                             </template>
                             <template x-if="item.price">
-                            <div class="shop-list-item-price" x-text="renderPrice(item.price) + ' €'">
+                            <div class="shop-list-item-price" :data-auth="item.a" :data-leftprice="getLeftPrice(item)" x-text="renderPrice(item.price) + ' €'">
                             </div>
                             </template>
                             <div class="shop-list-item-actions">
@@ -290,7 +286,7 @@
                 </template>
                 <template x-if="items && items.length">
                 <div class="shop-list-summary">
-                    <div class="shop-list-total" :data-leftPrice="getLeftPrice()" x-html="getTotal()">
+                    <div class="shop-list-total" x-html="getTotal()">
                     </div>
                 </div>
                 </template>
@@ -342,11 +338,23 @@
             PIPE.subscribe(EVENTS.onToBuyUpdate, () => {
                 const prices = section.querySelectorAll('[data-leftprice]');
                 let total = 0;
+                let totalAuth = {};
                 [...prices].forEach((p) => {
                     const pp = p.getAttribute('data-leftprice');
+                    let a = p.getAttribute('data-auth');
                     total += (+pp);
+                    if (!a) a = 'Didi';
+                    if (!totalAuth[a]) totalAuth[a] = 0;
+                    totalAuth[a] += (+pp);
                 });
-                totalDom.innerHTML = 'Total amount for shopping: <b>' + renderPrice(total) + " €</b>";
+                let totalAuthDom = '';
+                Object.keys(totalAuth).forEach((a) => {
+                    totalAuthDom += `<div class="subData"><span class="auth">${a}:</span><span class="separator"></span><b>${renderPrice(totalAuth[a])} €</b></div>`
+                });
+                totalDom.innerHTML = `
+                    <div class="mainData">Total amount for shopping: <b>${renderPrice(total)} €</b></div>
+                    ${totalAuthDom}
+                `;
             });
         });
     };

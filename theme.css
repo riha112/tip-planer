@@ -49,14 +49,37 @@ h1 {
   padding-bottom: 125px;
 }
 
-.total-toBuy-section:has(b) {
+.total-toBuy-section {
+  display: none;
   text-align: center;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+.total-toBuy-section:has(b) {
+  display: flex;
+}
+.total-toBuy-section .mainData {
   padding: 10px;
   background: #a5bd7b;
   border-radius: 30px;
   color: #262f13;
   margin-inline: auto;
   padding-inline: 30px;
+}
+.total-toBuy-section .subData {
+  display: flex;
+  font-size: 12px;
+  min-width: 300px;
+  max-width: 100%;
+}
+.total-toBuy-section .subData b {
+  font-weight: normal;
+}
+.total-toBuy-section .separator {
+  flex: 1;
+  border-bottom: 1px dotted;
 }
 
 #Plans,
@@ -1097,25 +1120,21 @@ body:not(.comment-mode-active) .detached-comments {
   transform: rotate(0);
 }
 
-.comment-mode-active .comment-mode-notice {
-  opacity: 100%;
-}
-
 .comment-mode-notice {
   pointer-events: none;
-  opacity: 0;
   position: absolute;
-  top: calc(100% - 13px);
   left: 50%;
+  transform: translate(-50%, -50%);
+  top: calc(50% + 225px);
   border-radius: 30px;
   padding: 4px 20px;
-  color: white;
-  background: #ce528d;
+  color: #d05991;
+  background: rgba(229, 105, 165, 0.24);
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
-  transform: translateX(-50%);
   white-space: nowrap;
+  backdrop-filter: blur(5px);
 }
 
 .filter {
@@ -1806,9 +1825,7 @@ body.isCompactView #ball {
     display: inline-block;
   }
   .comment-mode-notice {
-    font-size: 10px;
-    padding: 4px 16px;
-    top: -30px;
+    display: none;
   }
   .plan-selector {
     padding: 25px;
