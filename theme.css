@@ -306,6 +306,8 @@ h1 {
   flex-direction: row;
   border: 5px solid var(--accentColorBg);
   border-radius: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 .group .group.gTimes::before {
   content: "TIMES";
@@ -316,6 +318,56 @@ h1 {
 }
 .group .group.gTimes > div {
   flex: 1 1;
+}
+.group .group.gTimes .shop-list-form,
+.group .group.gTimes .todo-form {
+  padding: 15px 10px 10px 10px;
+}
+.group .group.gTimes .shop-list-item,
+.group .group.gTimes .todo-item {
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px;
+}
+.group .group.gTimes .shop-list-item > div,
+.group .group.gTimes .todo-item > div {
+  padding: 0;
+}
+.group .group.gTimes .shop-list-item > div:first-child,
+.group .group.gTimes .todo-item > div:first-child {
+  padding-top: 6px;
+}
+.group .group.gTimes .shop-list-item-author,
+.group .group.gTimes .todo-item-author {
+  display: none;
+}
+.group .group.gTimes .shop-list-action,
+.group .group.gTimes .todo-action {
+  border-radius: 10px;
+  flex-direction: column;
+}
+.group .group.gTimes .shop-list-total,
+.group .group.gTimes .todo-total {
+  width: 100%;
+  text-align: center;
+}
+.group .group.gTimes .shop-list-add,
+.group .group.gTimes .todo-add {
+  width: 100%;
+  aspect-ratio: unset;
+  gap: 8px;
+  font-weight: 600;
+  color: white;
+  align-items: center;
+}
+.group .group.gTimes .shop-list-inputs,
+.group .group.gTimes .todo-inputs {
+  flex-direction: column;
+}
+.group .group.gTimes .shop-list-inputs .shop-list-input,
+.group .group.gTimes .todo-inputs .shop-list-input {
+  max-width: 100%;
+  width: 100%;
 }
 .group .group::before {
   content: "PLAN";
@@ -1325,7 +1377,7 @@ template + .todo-item.isDone,
 .todo-item[data-prio="10"],
 .todo-item[data-prio="15"],
 .todo-item[data-prio="20"] {
-  padding-top: 25px;
+  padding-top: 28px !important;
   position: relative;
 }
 template + .shop-list-item.isBought::before, .shop-list-item:not(.isBought) + .isBought::before, template + .shop-list-item.isDone::before, .shop-list-item:not(.isDone) + .isDone::before, .shop-list-item[data-prio="1"]::before, .shop-list-item[data-prio="5"]::before, .shop-list-item[data-prio="10"]::before, .shop-list-item[data-prio="15"]::before, .shop-list-item[data-prio="20"]::before,
@@ -1697,6 +1749,7 @@ body.isCompactView #ball {
     gap: 6px;
   }
   .group .group.gTicketOptions, .group .group.gTimes {
+    display: flex;
     flex-direction: column;
   }
   .group-item {

@@ -356,6 +356,9 @@ h1 {
             border: 5px solid var(--accentColorBg);
             border-radius: 16px;
 
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
             &::before {
                 content: 'TIMES';
                 top: -5px;
@@ -366,6 +369,59 @@ h1 {
 
             &>div {
                 flex: 1 1;
+            }
+
+            .shop-list,
+            .todo {
+                &-form {
+                    padding: 15px 10px 10px 10px;
+                }
+                
+                &-item {
+                    flex-direction: column;
+                    gap: 6px;
+                    padding: 6px;
+
+                    & > div {
+                        padding: 0;
+
+                        &:first-child {
+                            padding-top: 6px;
+                        }
+                    }
+
+                    &-author {
+                        display: none;
+                    }
+                }
+
+                &-action {
+                    border-radius: 10px;
+                    flex-direction: column;
+                }
+
+                &-total {
+                    width: 100%;
+                    text-align: center;
+                }
+
+                &-add {
+                    width: 100%;
+                    aspect-ratio: unset;
+                    gap: 8px;
+                    font-weight: 600;
+                    color: white;
+                    align-items: center;
+                }
+
+                &-inputs {
+                    flex-direction: column;
+
+                    .shop-list-input {
+                        max-width: 100%;
+                        width: 100%;
+                    }
+                }
             }
         }
 
@@ -1559,7 +1615,7 @@ pointer-events: none;
         &[data-prio="10"],
         &[data-prio="15"],
         &[data-prio="20"] {
-            padding-top: 25px;
+            padding-top: 28px !important;
             position: relative;
 
             &::before {
@@ -1964,6 +2020,7 @@ body.isCompactView {
 
             &.gTicketOptions,
             &.gTimes {
+                display: flex;
                 flex-direction: column;
             }
         }
