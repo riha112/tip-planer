@@ -269,7 +269,7 @@
                             </a>
                             </template>
                             <template x-if="item.price">
-                            <div class="shop-list-item-price" :data-auth="item.a" :data-leftprice="getLeftPrice(item)" x-text="renderPrice(item.price) + ' €'">
+                            <div class="shop-list-item-price" :data-title="item.content" :data-auth="item.a" :data-leftprice="getLeftPrice(item)" x-text="renderPrice(item.price) + ' €'">
                             </div>
                             </template>
                             <div class="shop-list-item-actions">
@@ -339,17 +339,32 @@
                 const prices = section.querySelectorAll('[data-leftprice]');
                 let total = 0;
                 let totalAuth = {};
+                let pricesAuth = {};
+
                 [...prices].forEach((p) => {
                     const pp = p.getAttribute('data-leftprice');
+                    if (+pp === 0) return;
                     let a = p.getAttribute('data-auth');
+                    let t = p.getAttribute('data-title');
+
                     total += (+pp);
                     if (!a) a = 'Didi';
                     if (!totalAuth[a]) totalAuth[a] = 0;
                     totalAuth[a] += (+pp);
+                    if (!pricesAuth[a]) pricesAuth[a] = [];
+                    pricesAuth[a].push({p: +pp, t});
                 });
                 let totalAuthDom = '';
                 Object.keys(totalAuth).forEach((a) => {
-                    totalAuthDom += `<div class="subData"><span class="auth">${a}:</span><span class="separator"></span><b>${renderPrice(totalAuth[a])} €</b></div>`
+                    totalAuthDom += `<div class="subData"><span class="auth">${a}:</span><span class="separator"></span><b>${renderPrice(totalAuth[a])} €</b></div>`;
+                    if (pricesAuth[a]) {
+                        let ttt = '<div class="subData-wrapper">';
+                        pricesAuth[a].forEach((f) => {
+                            ttt += `<div class="subData sub"><span class="subTitle">${f.t}:</span><span class="separator"></span><b>${renderPrice(f.p)} €</b></div>`;
+                        });
+                        ttt += '</div>';
+                        totalAuthDom += ttt;
+                    }
                 });
                 totalDom.innerHTML = `
                     <div class="mainData">Total amount for shopping: <b>${renderPrice(total)} €</b></div>

@@ -56,6 +56,7 @@ h1 {
   gap: 12px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 }
 .total-toBuy-section:has(b) {
   display: flex;
@@ -76,6 +77,20 @@ h1 {
 }
 .total-toBuy-section .subData b {
   font-weight: normal;
+}
+.total-toBuy-section .subData-wrapper {
+  margin-top: -10px;
+  opacity: 0.7;
+}
+.total-toBuy-section .subData.sub {
+  font-size: 10px;
+}
+.total-toBuy-section .subData .subTitle {
+  text-transform: capitalize;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .total-toBuy-section .separator {
   flex: 1;
@@ -2047,7 +2062,9 @@ body.isCompactView #ball {
   height: 120px;
   border-radius: 50%;
   cursor: grab;
-  background: radial-gradient(circle at 35% 30%, #ff9f7a 0%, #ff5f6d 35%, #d6304a 70%, #a8203a 100%);
+  background-image: url("./img/ball.png");
+  background-size: 125%;
+  background-position: center;
   box-shadow: inset -8px -12px 25px rgba(0, 0, 0, 0.35), inset 6px 8px 20px rgba(255, 255, 255, 0.25), 0 10px 20px rgba(0, 0, 0, 0.4);
   will-change: transform;
 }

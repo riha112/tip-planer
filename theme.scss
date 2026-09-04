@@ -59,6 +59,7 @@ h1 {
     gap: 12px;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
 
     &:has(b) {
         display: flex;
@@ -79,6 +80,25 @@ h1 {
         min-width: 300px;
         max-width: 100%;
         b {font-weight: normal;}
+
+        &-wrapper {
+            margin-top: -10px;
+            opacity: 0.7;
+        }
+
+        &.sub {
+            font-size: 10px;
+        }
+
+        .sub {
+            &Title {
+                text-transform: capitalize;
+                max-width: 200px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            } 
+        }
     }
 
     .separator {
@@ -2380,8 +2400,11 @@ body.isCompactView {
     height: 120px;
     border-radius: 50%;
     cursor: grab;
-    background:
-      radial-gradient(circle at 35% 30%, #ff9f7a 0%, #ff5f6d 35%, #d6304a 70%, #a8203a 100%);
+    background-image: url('./img/ball.png');
+    background-size: 125%;
+    background-position: center;
+    //background:
+    // radial-gradient(circle at 35% 30%, #ff9f7a 0%, #ff5f6d 35%, #d6304a 70%, #a8203a 100%);
     box-shadow:
       inset -8px -12px 25px rgba(0,0,0,0.35),
       inset 6px 8px 20px rgba(255,255,255,0.25),
