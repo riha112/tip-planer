@@ -25,8 +25,8 @@
                     target.setHours(0, 0, 0, 0);
                     const days = (target - today) / (1000 * 60 * 60 * 24);
 
-                    return days + ' days left';
-                }
+                    return days + ' days left (' + workdaysLeftUntil('2026-09-21')  + ' work days)';
+                },
             }" x-text="daysTill()"></div>
         </div>
 
@@ -219,6 +219,7 @@
     <script src="./js/hash.js"></script>
     <script src="./js/who.js"></script>
     <script src="./js/notifications.js"></script>
+    <script src="./js/workdays.js"></script>
 
     <script src="./js/pipe.js"></script>
     <script src="./js/stressball.js"></script>
